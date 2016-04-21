@@ -16,6 +16,5 @@ public class Confessions_List_display extends FragmentActivity
         setContentView(R.layout.activity_confessions__list_display);
 
         actionBar = getActionBar();
-        actionBar.
     }
 }
