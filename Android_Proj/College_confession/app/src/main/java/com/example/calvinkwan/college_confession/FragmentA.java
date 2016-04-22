@@ -26,7 +26,7 @@ public class FragmentA extends Fragment
                              Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragmentA_, container, false);
+        return inflater.inflate(R.layout.fragment_a, container, false);
     }
 
 }
