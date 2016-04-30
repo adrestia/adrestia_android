@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="5dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginRight="60dp"
+        android:text="&quot;I just did something bad&quot; hello world is amazings balls guys i am so sleepy"
+        android:id="@+id/textView"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true" />
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="30 mins"
+        android:id="@+id/minSincePost"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="34dp"
+        android:layout_below="@+id/downvote"
+        android:layout_alignStart="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Reply"
+        android:id="@+id/replyButton"
+        android:layout_alignBottom="@+id/minSincePost"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="25dp"
+        android:id="@+id/reportPost"
+        android:background="@mipmap/Flag"
+        android:scaleType="center"
+        android:layout_alignTop="@+id/replyButton"
+        android:layout_toStartOf="@+id/downvote" />
+
+    <ImageButton
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/upvote"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="6dp"
+        android:background="@mipmap/ic_arrow_upward_black"
+        android:layout_marginRight="30dp"/>
+
+
+    <ImageButton
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/downvote"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:background="@mipmap/ic_arrow_downward_black"
+        android:layout_marginRight="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="20"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="2dp"
+        android:id="@+id/voteScore"
+        android:layout_below="@+id/upvote"
+        android:layout_alignEnd="@+id/downvote" />
+</RelativeLayout>
