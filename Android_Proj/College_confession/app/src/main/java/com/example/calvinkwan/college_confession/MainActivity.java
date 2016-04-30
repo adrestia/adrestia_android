@@ -23,4 +23,14 @@ public class MainActivity extends AppCompatActivity
         this.startActivity(intent);
 
     }
+
+    public void ForgetPassword(View view)
+    {
+
+    }
+
+    public void Register(View view)
+    {
+
+    }
 }

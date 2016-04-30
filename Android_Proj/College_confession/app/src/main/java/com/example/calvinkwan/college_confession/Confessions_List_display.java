@@ -37,6 +37,7 @@ public class Confessions_List_display extends AppCompatActivity
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         mTabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        mTabs.setDistributeEvenly(true);
         mTabs.setViewPager(mPager);
     }
 
@@ -44,7 +45,7 @@ public class Confessions_List_display extends AppCompatActivity
     {
 
         int icons[] = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
-        String[] tabs = {"tab 1", "tab 2", "tab 3"};
+        String[] tabs = {"New", "Hot", "Top"};
 
         public MyPagerAdapter(FragmentManager fm)
         {

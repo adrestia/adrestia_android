@@ -37,4 +37,25 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp"
         android:onClick="Login"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Forget Password"
+        android:id="@+id/forgetPassword"
+        android:layout_below="@+id/login"
+        android:layout_toStartOf="@+id/login"
+        android:onClick="ForgetPassword"
+        android:layout_marginTop="55dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Register"
+        android:onClick="Register"
+        android:id="@+id/register"
+        android:layout_alignTop="@+id/forgetPassword"
+        android:layout_toEndOf="@+id/password" />
 </RelativeLayout>

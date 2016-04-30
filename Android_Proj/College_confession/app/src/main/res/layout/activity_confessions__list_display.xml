@@ -12,9 +12,6 @@
         android:orientation="vertical"
         tools:context="com.example.calvinkwan.college_confession.Confessions_List_display">
 
-        <include
-            android:id="@+id/app_bar"
-            layout="@layout/app_bar" />
 
         <com.example.calvinkwan.college_confession.tabs.SlidingTabLayout
             android:layout_width="match_parent"
