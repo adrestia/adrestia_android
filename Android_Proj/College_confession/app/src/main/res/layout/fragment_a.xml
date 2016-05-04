@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="#FFCC00"
+             android:background="#FFFFFF"
              tools:context="com.example.calvinkwan.college_confession.FragmentA">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,5 +12,7 @@
         android:layout_height="match_parent"
         android:id="@+id/position"
         android:text="This is Fragment A"/>
+
+
 
 </FrameLayout>

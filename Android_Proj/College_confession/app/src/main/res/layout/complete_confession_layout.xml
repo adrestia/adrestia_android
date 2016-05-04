@@ -47,8 +47,8 @@
         android:id="@+id/reportPost"
         android:background="@mipmap/ic_error_black"
         android:scaleType="center"
-        android:layout_alignTop="@+id/replyButton"
-        android:layout_toStartOf="@+id/downvote" />
+        android:layout_below="@+id/downvote"
+        android:layout_alignEnd="@+id/textView" />
 
     <ImageButton
         android:layout_width="20dp"

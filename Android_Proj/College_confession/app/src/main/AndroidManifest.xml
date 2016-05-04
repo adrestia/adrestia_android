@@ -15,7 +15,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Confessions_List_display"></activity>
+        <activity android:name=".Confessions_List_display" />
+        <activity
+            android:name=".RegisterActivity"
+            android:parentActivityName="com.example.calvinkwan.college_confession.MainActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.calvinkwan.college_confession.MainActivity" />
+
+        </activity>
     </application>
 
 </manifest>
