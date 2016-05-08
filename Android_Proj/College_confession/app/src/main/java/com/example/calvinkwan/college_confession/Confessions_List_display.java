@@ -1,5 +1,7 @@
 package com.example.calvinkwan.college_confession;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,7 +16,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.calvinkwan.college_confession.tabs.SlidingTabLayout;
 
@@ -25,6 +29,8 @@ public class Confessions_List_display extends AppCompatActivity
     private SlidingTabLayout mTabs;
 
     ActionBar actionBar;
+
+    ImageButton floatButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -39,6 +45,24 @@ public class Confessions_List_display extends AppCompatActivity
         mTabs = (SlidingTabLayout) findViewById(R.id.tabs);
         mTabs.setDistributeEvenly(true);
         mTabs.setViewPager(mPager);
+
+
+
+
+        //super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_confessions__list_display);
+
+        floatButton = (ImageButton) findViewById(R.id.imageButton);
+        floatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getApplicationContext(),
+                //        "Button is clicked", Toast.LENGTH_LONG).show();
+
+                setContentView(R.layout.dialogbox);
+
+            }
+        });
     }
 
     class MyPagerAdapter extends FragmentPagerAdapter
@@ -98,4 +122,7 @@ public class Confessions_List_display extends AppCompatActivity
             return layout;
         }
     }
+
+
+
 }
