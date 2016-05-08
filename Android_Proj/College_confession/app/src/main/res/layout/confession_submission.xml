@@ -5,19 +5,6 @@
     android:weightSum="1">
 
 
-    <ImageButton
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:id="@+id/imageButton"
-        android:background="@drawable/oval"
-        android:elevation="10dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="400dp"
-        android:layout_marginRight="25dp"
-        android:src="@mipmap/ic_plus_box"
-        android:layout_gravity="right"
-        android:drawSelectorOnTop="true"/>
-
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
