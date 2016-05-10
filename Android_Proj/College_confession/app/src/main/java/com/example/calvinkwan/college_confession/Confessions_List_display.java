@@ -51,18 +51,6 @@ public class Confessions_List_display extends AppCompatActivity
 
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_confessions__list_display);
-
-        floatButton = (ImageButton) findViewById(R.id.imageButton);
-        floatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(),
-                //        "Button is clicked", Toast.LENGTH_LONG).show();
-
-                setContentView(R.layout.dialogbox);
-
-            }
-        });
     }
 
     class MyPagerAdapter extends FragmentPagerAdapter

@@ -21,24 +21,9 @@
 
         <android.support.v4.view.ViewPager
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:id="@+id/pager"/>
 
-
-        <ImageButton
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:id="@+id/imageButton"
-            android:background="@drawable/oval"
-            android:elevation="10dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="375dp"
-            android:layout_marginRight="25dp"
-            android:src="@mipmap/ic_plus_box"
-            android:layout_gravity="right"
-            android:drawSelectorOnTop="true"
-            android:clickable="true" />
 
 
     </LinearLayout>
