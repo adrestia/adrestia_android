@@ -12,5 +12,7 @@
         <item>TAB 2</item>
         <item>TAB 3</item>
     </string-array>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
