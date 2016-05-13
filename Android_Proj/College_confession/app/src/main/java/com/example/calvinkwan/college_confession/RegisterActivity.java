@@ -11,11 +11,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity
 {
@@ -39,34 +34,25 @@ public class RegisterActivity extends AppCompatActivity
         password1 = mPassword.getText().toString();
         password2 = mConfirmPassword.getText().toString();
         email = mEmail.getText().toString();
-        if(password1 != password2)
-        {
-            //future toast message notification
-        }
         if(validEmail(email))
         {
-            OkHttpClient client = new OkHttpClient();
-
-            RequestBody formBody = new FormBody.Builder()
-                    .add("message", "Your message")
-                    .build();
-            Request request = new Request.Builder()
-                    .url("http://www.foo.bar/index.php")
-                    .post(formBody)
-                    .build();
-
-            try {
-                Response response = client.newCall(request).execute();
-
-                // Do something with the response.
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //registration activities
         }
         else
         {
             Toast.makeText(getApplicationContext(),
                     "Please enter a valid edu email", Toast.LENGTH_LONG).show();
+        }
+        if((password1.equals(password2)))
+        {
+            //future toast message notification
+            Toast.makeText(getApplicationContext(),
+                    "Your have entered a valid password", Toast.LENGTH_LONG).show();
+        }
+        {
+            //future toast message notification
+            Toast.makeText(getApplicationContext(),
+                    password1 + "    " + password2, Toast.LENGTH_LONG).show();
         }
     }
 
