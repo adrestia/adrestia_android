@@ -1,13 +1,22 @@
 package com.example.calvinkwan.college_confession;
 
 import android.app.DownloadManager;
+import android.content.ContentValues;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.loopj.android.http.RequestParams;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity
 {
     EditText mEmail, mPassword, mConfirmPassword;
     String password1, password2, email;
+
 
 
     @Override
@@ -37,6 +47,9 @@ public class RegisterActivity extends AppCompatActivity
         if(validEmail(email))
         {
             //registration activities
+            //InputStream registerationStream = "todo";
+            RequestParams params = new RequestParams();
+
         }
         else
         {
@@ -76,4 +89,8 @@ public class RegisterActivity extends AppCompatActivity
 
         //"http://stackoverflow.com/questions/12947620/email-address-validation-in-android-on-edittext"
     }
+
+
+
+
 }

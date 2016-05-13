@@ -1,1 +1,1 @@
-include ':app', ':okhttp-3.2.0'
+include ':app', ':okhttp-3.2.0', ':android-async-http-1.4.9'
