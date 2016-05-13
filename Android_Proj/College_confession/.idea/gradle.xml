@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/android-async-http-1.4.9" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/httpclient-4.4.1.2" />
+            <option value="$PROJECT_DIR$/volley" />
           </set>
         </option>
         <option name="myModules">
@@ -20,6 +21,7 @@
             <option value="$PROJECT_DIR$/android-async-http-1.4.9" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/httpclient-4.4.1.2" />
+            <option value="$PROJECT_DIR$/volley" />
           </set>
         </option>
       </GradleProjectSettings>
