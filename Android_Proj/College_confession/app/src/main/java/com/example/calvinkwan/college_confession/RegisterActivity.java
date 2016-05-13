@@ -2,6 +2,7 @@ package com.example.calvinkwan.college_confession;
 
 import android.app.DownloadManager;
 import android.content.ContentValues;
+import android.preference.PreferenceActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Pair;
@@ -9,8 +10,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -25,6 +29,8 @@ public class RegisterActivity extends AppCompatActivity
 {
     EditText mEmail, mPassword, mConfirmPassword;
     String password1, password2, email;
+
+
 
 
 
@@ -46,9 +52,23 @@ public class RegisterActivity extends AppCompatActivity
         email = mEmail.getText().toString();
         if(validEmail(email))
         {
-            //registration activities
-            //InputStream registerationStream = "todo";
+            AsyncHttpClient client = new AsyncHttpClient();
             RequestParams params = new RequestParams();
+            params.put("email", email);
+            params.put("password", password1);
+
+            client.get("http://dev.collegeconfessions.party/api", params, new TextHttpResponseHandler() {
+                        @Override
+                        public void onFailure(int i, PreferenceActivity.Header[] headers, String s, Throwable throwable) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(int i, PreferenceActivity.Header[] headers, String s) {
+
+                        }
+            }
+            );
 
         }
         else
