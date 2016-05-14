@@ -15,4 +15,9 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="action_settings">Settings</string>
 
+    <string-array name="college_names">
+        <item>test1</item>
+        <item>test2</item>
+    </string-array>
+
 </resources>
