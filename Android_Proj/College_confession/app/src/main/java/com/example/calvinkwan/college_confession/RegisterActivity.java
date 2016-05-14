@@ -10,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,15 +24,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,6 +61,51 @@ public class RegisterActivity extends AppCompatActivity
         mPassword = (EditText) findViewById(R.id.password);
         mConfirmPassword = (EditText) findViewById(R.id.confirmPassword);
         responseText = (TextView) findViewById(R.id.textView6);
+
+        Spinner dropdown = (Spinner)findViewById(R.id.spinner1);
+
+        String[] items = new String[]{"1", "2", "three"};
+
+        Vector<String>str=new Vector<String>();
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new InputStreamReader(getAssets().open("world_universities_and_domains.json")));
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        String line = "";
+        try {
+            line = in.readLine();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        int index = 0;
+        while (line != null) {
+            if(line.indexOf("name") != -1)
+                //String college_name = line.substring(8,line.length()-2);
+                str.add(line.substring(15,line.length()-2));
+            try {
+                line = in.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+        ArrayAdapter adapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, str);
+
+        spinner.setAdapter(adapter);
+        //
+        /*
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+        */
     }
 
     public void ConfirmInfo(View view)
@@ -69,26 +119,28 @@ public class RegisterActivity extends AppCompatActivity
             if (matchingPasswords(password1, password2))
             {
                 RequestQueue queue = Volley.newRequestQueue(this);
-                String url ="http://www.google.com";
+                String url = "http://www.google.com";
 
                 // Request a string response from the provided URL.
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>()
                 {
                     @Override
                     public void onResponse(String response)
                     {
                         // Display the first 500 characters of the response string.
-                        responseText.setText("Response is: "+ response.substring(0,500));
+                        responseText.setText("Response is: " + response.substring(0, 500));
                     }
                 },
-                new Response.ErrorListener()
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error)
+                            {
+                                responseText.setText("That didn't work!");
+                            }
+                        })
+
                 {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        responseText.setText("That didn't work!");
-                    }
-                }) {
 
                     @Override
                     protected Map<String, String> getParams()
@@ -100,18 +152,19 @@ public class RegisterActivity extends AppCompatActivity
                         return params;
                     }
                     //https://gist.github.com/mombrea/7250835
+
+
                 };
 
 // Add the request to the RequestQueue.
-            queue.add(stringRequest);
+                queue.add(stringRequest);
 
 
+            }
         }
-        else {
-            Toast.makeText(getApplicationContext(),
-                    "Please enter a valid edu email", Toast.LENGTH_LONG).show();
-        }
-
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Please enter a valid edu email", Toast.LENGTH_LONG).show();
         }
     }
 
