@@ -58,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity
         responseText = (TextView) findViewById(R.id.textView6);
     }
 
-    public Map<String, String> ConfirmInfo(View view)
+    public void ConfirmInfo(View view)
     {
         password1 = mPassword.getText().toString();
         password2 = mConfirmPassword.getText().toString();
@@ -99,6 +99,7 @@ public class RegisterActivity extends AppCompatActivity
                         //todo for college ID (Alex Tan)
                         return params;
                     }
+                    //https://gist.github.com/mombrea/7250835
                 };
 
 // Add the request to the RequestQueue.
