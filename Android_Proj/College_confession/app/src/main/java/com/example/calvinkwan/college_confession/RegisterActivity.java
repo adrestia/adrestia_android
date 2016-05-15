@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.os.AsyncTask;
 import android.preference.PreferenceActivity;
 import android.support.annotation.BoolRes;
+import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Pair;
@@ -48,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity
 
 
 
+    String strI = Integer.toString(8572);
 
 
 
@@ -83,8 +85,13 @@ public class RegisterActivity extends AppCompatActivity
             e.printStackTrace();
         }
         int index = 0;
+        int country_code = 1;
+        if(line.indexOf("alpha_two_code") != -1 && line.indexOf("US") == -1)
+        {
+            country_code = 0;
+        }
         while (line != null) {
-            if(line.indexOf("name") != -1)
+            if(line.indexOf("name") != -1 && country_code == 1)
                 //String college_name = line.substring(8,line.length()-2);
                 str.add(line.substring(15,line.length()-2));
             try {
@@ -119,16 +126,15 @@ public class RegisterActivity extends AppCompatActivity
             if (matchingPasswords(password1, password2))
             {
                 RequestQueue queue = Volley.newRequestQueue(this);
-                String url = "http://www.google.com";
+                String url = "http://dev.collegeconfessions.party/api/register";
 
                 // Request a string response from the provided URL.
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>()
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
                 {
                     @Override
                     public void onResponse(String response)
                     {
-                        // Display the first 500 characters of the response string.
-                        responseText.setText("Response is: " + response.substring(0, 500));
+                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                     }
                 },
                         new Response.ErrorListener()
@@ -136,30 +142,26 @@ public class RegisterActivity extends AppCompatActivity
                             @Override
                             public void onErrorResponse(VolleyError error)
                             {
-                                responseText.setText("That didn't work!");
+                                Toast.makeText(getApplicationContext(), "That didn't work!", Toast.LENGTH_LONG).show();
                             }
                         })
 
-                {
-
+                {;
                     @Override
                     protected Map<String, String> getParams()
                     {
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("email", email);
                         params.put("password", password1);
-                        //todo for college ID (Alex Tan)
+                        params.put("college_id", strI);
                         return params;
                     }
                     //https://gist.github.com/mombrea/7250835
-
 
                 };
 
 // Add the request to the RequestQueue.
                 queue.add(stringRequest);
-
-
             }
         }
         else
@@ -197,7 +199,7 @@ public class RegisterActivity extends AppCompatActivity
             return true;
         }
         Toast.makeText(getApplicationContext(),
-                "Your have entered a invalid password" +password1 + "    " + password2, Toast.LENGTH_LONG).show();
+                "Your have entered a invalid password //" +password1 + "    " + password2, Toast.LENGTH_LONG).show();
         return false;
     }
 
