@@ -69,10 +69,16 @@ public class RegisterActivity extends AppCompatActivity
             e.printStackTrace();
         }
         int index = 0;
+        int x = 1;
         while (line != null) {
-            if(line.indexOf("name") != -1)
+
+            if(line.indexOf("alpha_two_code") != -1 && line.indexOf("US") == -1)
+                x = 0;
+
+
+            if(line.indexOf("name") != -1 && x == 1)
                 //String college_name = line.substring(8,line.length()-2);
-                str.add(line.substring(15,line.length()-2));
+                str.add(line.substring(15, line.length() - 2));
                 try {
                     line = in.readLine();
                 } catch (IOException e) {
