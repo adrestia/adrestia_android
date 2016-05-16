@@ -25,6 +25,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -47,9 +49,6 @@ public class RegisterActivity extends AppCompatActivity
     String password1, password2, email;
     TextView responseText;
 
-
-
-    String strI = Integer.toString(8572);
 
 
 
@@ -136,7 +135,22 @@ public class RegisterActivity extends AppCompatActivity
                     @Override
                     public void onResponse(String response)
                     {
-                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                        try {
+                            JSONObject responseOBJ = new JSONObject(response);
+
+                            String status = responseOBJ.getString("status");
+                            String message = responseOBJ.getString("error");
+
+                            responseText.setText(message);
+
+                            Toast.makeText(getApplicationContext(), status, Toast.LENGTH_LONG).show();
+
+                        }
+                        catch (Exception e)
+                        {
+
+
+                        }
                     }
                 },
                         new Response.ErrorListener()
@@ -144,7 +158,7 @@ public class RegisterActivity extends AppCompatActivity
                             @Override
                             public void onErrorResponse(VolleyError error)
                             {
-                                Toast.makeText(getApplicationContext(), "That didn't work!", Toast.LENGTH_LONG).show();
+                                responseText.setText("That didn't work!");
                             }
                         })
 
@@ -155,7 +169,7 @@ public class RegisterActivity extends AppCompatActivity
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("email", email);
                         params.put("password", password1);
-                        params.put("college_id", strI);
+                        params.put("college_name", "University of California, Riverside");
                         return params;
                     }
                     //https://gist.github.com/mombrea/7250835
