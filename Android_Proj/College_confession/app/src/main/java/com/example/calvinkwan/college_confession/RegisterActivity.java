@@ -86,11 +86,13 @@ public class RegisterActivity extends AppCompatActivity
         }
         int index = 0;
         int country_code = 1;
-        if(line.indexOf("alpha_two_code") != -1 && line.indexOf("US") == -1)
+        while (line != null)
         {
-            country_code = 0;
-        }
-        while (line != null) {
+            if(line.indexOf("alpha_two_code") != -1 && line.indexOf("US") == -1)
+            {
+                country_code = 0;
+            }
+
             if(line.indexOf("name") != -1 && country_code == 1)
                 //String college_name = line.substring(8,line.length()-2);
                 str.add(line.substring(15,line.length()-2));
