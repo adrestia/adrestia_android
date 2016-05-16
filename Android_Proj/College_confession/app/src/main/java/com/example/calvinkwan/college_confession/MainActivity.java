@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         serverResponse = (TextView) findViewById(R.id.serverResponse);
 
         final String mEmail, mPassword;
-        mEmail = email.getText().toString();
+        mEmail = email.getText().toString().trim();
         mPassword = password.getText().toString();
 
                 RequestQueue queue = Volley.newRequestQueue(this);

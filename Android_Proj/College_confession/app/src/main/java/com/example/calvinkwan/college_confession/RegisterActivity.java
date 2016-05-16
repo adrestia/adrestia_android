@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity
     {
         password1 = mPassword.getText().toString();
         password2 = mConfirmPassword.getText().toString();
-        email = mEmail.getText().toString();
+        email = mEmail.getText().toString().trim();
 
         if(validEmail(email))
         {
