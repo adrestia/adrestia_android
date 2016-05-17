@@ -39,11 +39,6 @@ public class MainActivity extends AppCompatActivity
 
     public void Login(View view)
     {
-        Intent intent = new Intent(getApplicationContext(), Confessions_List_display.class);
-        this.startActivity(intent);
-    }
-
-/*
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         serverResponse = (TextView) findViewById(R.id.serverResponse);
@@ -115,7 +110,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-*/
+
 
 
 

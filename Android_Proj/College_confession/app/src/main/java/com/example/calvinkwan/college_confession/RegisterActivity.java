@@ -1,12 +1,5 @@
 package com.example.calvinkwan.college_confession;
 
-import android.app.DownloadManager;
-import android.app.ProgressDialog;
-import android.content.ContentValues;
-import android.os.AsyncTask;
-import android.preference.PreferenceActivity;
-import android.support.annotation.BoolRes;
-import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Pair;
@@ -29,15 +22,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -234,8 +221,7 @@ public class RegisterActivity extends AppCompatActivity
         {
             return true;
         }
-        Toast.makeText(getApplicationContext(),
-                "Your have entered a invalid password //" +password1 + "    " + password2, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Your have entered a invalid password //" +password1 + "    " + password2, Toast.LENGTH_LONG).show();
         return false;
     }
 
