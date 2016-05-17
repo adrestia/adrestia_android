@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.example.calvinkwan.college_confession.tabs.SlidingTabLayout;
 
+import java.security.PolicySpi;
+
 public class Confessions_List_display extends AppCompatActivity
 {
     private Toolbar toolbar;
@@ -108,8 +110,10 @@ public class Confessions_List_display extends AppCompatActivity
         }
         if (id == R.id.newConfession)
         {
-            return true;
+            Intent postIntent = new Intent(getApplicationContext(), PostConfession.class);
+            startActivity(postIntent);
             //will open new message activity
+
         }
 
         return super.onOptionsItemSelected(item);

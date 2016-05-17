@@ -122,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                //Toast.makeText(RegisterActivity.this, parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
                 College_selcted = parent.getSelectedItem().toString();
             }
 
@@ -189,7 +189,7 @@ public class RegisterActivity extends AppCompatActivity
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("email", email);
                         params.put("password", password1);
-                        params.put("college_name", "College_selcted");
+                        params.put("college_name", "University of California, Riverside");
                         return params;
                     }
                     //https://gist.github.com/mombrea/7250835
