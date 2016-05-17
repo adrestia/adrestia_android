@@ -45,12 +45,18 @@ public class MainActivity extends AppCompatActivity
         password = (EditText) findViewById(R.id.password);
         serverResponse = (TextView) findViewById(R.id.serverResponse);
 
+        if(email.length() == 0 && password.length() == 0)
+        {
+            serverResponse.setText("Please enter in an email and password");
+            return;
+        }
+
         final String mEmail, mPassword;
         mEmail = email.getText().toString().trim();
         mPassword = password.getText().toString();
 
-                RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://dev.collegeconfessions.party/api/login";
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://dev.collegeconfessions.party/api/login";
 
         // Request a string response from the provided URL.
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
@@ -82,7 +88,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                serverResponse.setText("That didn't work!");
+                serverResponse.setText("Please make sure your credentials are valid");
             }
         })
 

@@ -102,8 +102,14 @@ public class Confessions_List_display extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings)
+        {
             return true;
+        }
+        if (id == R.id.newConfession)
+        {
+            return true;
+            //will open new message activity
         }
 
         return super.onOptionsItemSelected(item);
