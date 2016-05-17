@@ -10,22 +10,28 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Confessions_List_display" />
+        <activity android:name=".Confessions_List_display"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".RegisterActivity"
+            android:screenOrientation="portrait">
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.calvinkwan.college_confession.MainActivity" />
         </activity>
-        <activity android:name=".PostConfession"></activity>
+        <activity android:name=".PostConfession"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
