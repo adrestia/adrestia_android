@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -46,7 +47,7 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity
 {
     EditText mEmail, mPassword, mConfirmPassword;
-    String password1, password2, email;
+    String password1, password2, email, College_selcted;
     TextView responseText;
 
 
@@ -114,6 +115,24 @@ public class RegisterActivity extends AppCompatActivity
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
         */
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                //Toast.makeText(RegisterActivity.this, parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                College_selcted = parent.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+
+        });
     }
 
     public void ConfirmInfo(View view)
@@ -170,7 +189,7 @@ public class RegisterActivity extends AppCompatActivity
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("email", email);
                         params.put("password", password1);
-                        params.put("college_name", "University of California, Riverside");
+                        params.put("college_name", "College_selcted");
                         return params;
                     }
                     //https://gist.github.com/mombrea/7250835
