@@ -123,8 +123,9 @@ public class RegisterActivity extends AppCompatActivity
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                Toast.makeText(RegisterActivity.this, parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
                 College_selcted = parent.getSelectedItem().toString();
+                Toast.makeText(RegisterActivity.this, College_selcted, Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
