@@ -1,6 +1,7 @@
 package com.example.calvinkwan.college_confession;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,8 +29,6 @@ public class MainActivity extends AppCompatActivity
     TextView serverResponse;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -39,6 +38,8 @@ public class MainActivity extends AppCompatActivity
 
     public void Login(View view)
     {
+
+
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         serverResponse = (TextView) findViewById(R.id.serverResponse);
@@ -68,7 +69,12 @@ public class MainActivity extends AppCompatActivity
                     JSONObject responseOBJ = new JSONObject(response);
 
                     String status = responseOBJ.getString("status");
+                    String apiKey = responseOBJ.getString("api_key");
                     Toast.makeText(getApplicationContext(), status, Toast.LENGTH_LONG).show();
+
+                    SharedPreferences.Editor editor = getSharedPreferences("API_key", MODE_PRIVATE).edit();
+                    editor.putString("api_KEY", apiKey);
+                    editor.commit();
 
                     startMain(status);
 
