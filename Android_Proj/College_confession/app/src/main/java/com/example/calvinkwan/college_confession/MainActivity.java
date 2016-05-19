@@ -1,5 +1,6 @@
 package com.example.calvinkwan.college_confession;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -46,7 +47,10 @@ public class MainActivity extends AppCompatActivity
 
     public void Login(View view)
     {
-
+        final ProgressDialog loginUser = new ProgressDialog(this);
+        loginUser.setTitle("Loading");
+        loginUser.setMessage("Please wait");
+        loginUser.show();
 
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
@@ -71,6 +75,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onResponse(String response)
             {
+                loginUser.dismiss();
+
                 serverResponse.setText(response);
                 try
                 {
@@ -85,7 +91,6 @@ public class MainActivity extends AppCompatActivity
                     editor.commit();
 
                     startMain(status);
-
 
                 }
                 catch (Exception e)
