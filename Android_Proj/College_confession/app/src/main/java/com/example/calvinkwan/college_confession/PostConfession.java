@@ -90,11 +90,12 @@ public class PostConfession extends AppCompatActivity
                         JSONObject responseOBJ = new JSONObject(response);
 
                         String status = responseOBJ.getString("status");
-                        String apiKey = responseOBJ.getString("api_key");
-                        //Toast.makeText(getApplicationContext(), apiKey, Toast.LENGTH_LONG).show();
+                        if(status.equals("200"))
+                        {
+                            Toast.makeText(getApplicationContext(), "Post was a success", Toast.LENGTH_LONG).show();
+                            returnTOConfessionList();
 
-                        //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-
+                        }
 
                     }
                     catch (Exception e)
@@ -134,6 +135,12 @@ public class PostConfession extends AppCompatActivity
 
 
 
+    }
+
+    void returnTOConfessionList()
+    {
+        Intent confessionList = new Intent(getApplicationContext(), Confessions_List_display.class);
+        startActivity(confessionList);
     }
 
 
