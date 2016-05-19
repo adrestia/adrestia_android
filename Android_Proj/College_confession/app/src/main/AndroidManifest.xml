@@ -31,6 +31,9 @@
         </activity>
         <activity android:name=".PostConfession"
             android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.calvinkwan.college_confession.Confessions_List_display" />
         </activity>
     </application>
 
