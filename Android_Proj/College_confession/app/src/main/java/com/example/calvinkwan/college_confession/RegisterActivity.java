@@ -176,7 +176,7 @@ public class RegisterActivity extends AppCompatActivity
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("email", email);
                         params.put("password", password1);
-                        params.put("college_name", "University of California, Riverside");
+                        params.put("college_name", College_selcted);
                         return params;
                     }
                     //https://gist.github.com/mombrea/7250835

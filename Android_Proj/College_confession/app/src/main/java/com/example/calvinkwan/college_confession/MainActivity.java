@@ -34,6 +34,14 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
+        String savedAPIKEY = pref.getString("api_KEY", null);
+
+        if(savedAPIKEY != null)
+        {
+            startMain("200");
+        }
     }
 
     public void Login(View view)
@@ -115,8 +123,6 @@ public class MainActivity extends AppCompatActivity
 
 
     }
-
-
 
 
 
