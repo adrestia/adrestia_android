@@ -1,5 +1,6 @@
 package com.example.calvinkwan.college_confession;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Pair;
@@ -124,6 +125,11 @@ public class RegisterActivity extends AppCompatActivity
 
     public void ConfirmInfo(View view)
     {
+        final ProgressDialog registration = new ProgressDialog(this);
+        registration.setTitle("Please Wait");
+        registration.setMessage("Please wait while we're creating a new user");
+        registration.show();
+
         password1 = mPassword.getText().toString();
         password2 = mConfirmPassword.getText().toString();
         email = mEmail.getText().toString().trim();
@@ -141,6 +147,9 @@ public class RegisterActivity extends AppCompatActivity
                     @Override
                     public void onResponse(String response)
                     {
+
+                        registration.dismiss();
+
                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                         try {
                             JSONObject responseOBJ = new JSONObject(response);
@@ -151,6 +160,7 @@ public class RegisterActivity extends AppCompatActivity
                             responseText.setText(message);
 
                             Toast.makeText(getApplicationContext(), status, Toast.LENGTH_LONG).show();
+
 
                         }
                         catch (Exception e)
