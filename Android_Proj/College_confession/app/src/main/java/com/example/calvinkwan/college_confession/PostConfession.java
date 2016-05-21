@@ -101,7 +101,6 @@ public class PostConfession extends AppCompatActivity
                     catch (Exception e)
                     {
 
-
                     }
                 }
             },
@@ -132,9 +131,6 @@ public class PostConfession extends AppCompatActivity
 
 
         }
-
-
-
     }
 
     void returnTOConfessionList()

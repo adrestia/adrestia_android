@@ -2,6 +2,7 @@ package com.example.calvinkwan.college_confession;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +14,7 @@ import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,12 +24,21 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.calvinkwan.college_confession.tabs.SlidingTabLayout;
 
-import java.security.PolicySpi;
+import org.json.JSONObject;
 
-public class Confessions_List_display extends AppCompatActivity
-{
+import java.security.PolicySpi;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Confessions_List_display extends AppCompatActivity {
     private Toolbar toolbar;
     private ViewPager mPager;
     private SlidingTabLayout mTabs;
@@ -37,8 +48,7 @@ public class Confessions_List_display extends AppCompatActivity
     ImageButton floatButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confessions__list_display);
         actionBar = getActionBar();
@@ -49,67 +59,57 @@ public class Confessions_List_display extends AppCompatActivity
         mTabs.setDistributeEvenly(true);
         mTabs.setViewPager(mPager);
 
-
+        getConfessions(1);
 
 
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_confessions__list_display);
     }
 
-    class MyPagerAdapter extends FragmentPagerAdapter
-    {
-
-        int icons[] = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
+    class MyPagerAdapter extends FragmentPagerAdapter {
         String[] tabs = {"New", "Hot", "Top"};
 
-        public MyPagerAdapter(FragmentManager fm)
-        {
+        public MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
+
         @Override
         public Fragment getItem(int position)
         {
             MyFragment myFragment = MyFragment.getInstance(position);
-
             return myFragment;
         }
 
         @Override
-        public CharSequence getPageTitle(int position)
-        {
+        public CharSequence getPageTitle(int position) {
             return tabs[position];
         }
 
         @Override
-        public int getCount()
-        {
+        public int getCount() {
             return 3;
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
-        {
+        if (id == R.id.action_settings) {
             return true;
         }
-        if (id == R.id.newConfession)
-        {
+        if (id == R.id.newConfession) {
             Intent postIntent = new Intent(getApplicationContext(), PostConfession.class);
             startActivity(postIntent);
             //will open new message activity
@@ -119,11 +119,48 @@ public class Confessions_List_display extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    void getConfessions(int position)
+    {
+        SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
+        String savedAPIKEY = pref.getString("api_KEY", null);
+
+        String url;
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        url = "https://dev.collegeconfessions.party/api/posts/new?apikey=" + savedAPIKEY;
+
+        // Request a string response from the provided URL.
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                parseJSONResponse(response);
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+    }
+
+
+    private void parseJSONResponse(String object)
+    {
+        Toast.makeText(this, object, Toast.LENGTH_LONG).show();
+    }
+
     public static class MyFragment extends Fragment
     {
         private TextView textView;
         public static MyFragment getInstance(int position)
         {
+
             MyFragment myFragment = new MyFragment();
             Bundle args = new Bundle();
             args.putInt("position", position);
@@ -145,6 +182,7 @@ public class Confessions_List_display extends AppCompatActivity
             return layout;
         }
     }
+
 
 
 
