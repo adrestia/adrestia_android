@@ -1,6 +1,7 @@
 package com.example.calvinkwan.college_confession;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
@@ -38,58 +39,17 @@ import java.security.PolicySpi;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Confessions_List_display extends AppCompatActivity {
-    private Toolbar toolbar;
-    private ViewPager mPager;
-    private SlidingTabLayout mTabs;
-
-    ActionBar actionBar;
-
-    ImageButton floatButton;
-
+public class Confessions_List_display extends AppCompatActivity
+{
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confessions__list_display);
-        actionBar = getActionBar();
 
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
-        mTabs = (SlidingTabLayout) findViewById(R.id.tabs);
-        mTabs.setDistributeEvenly(true);
-        mTabs.setViewPager(mPager);
-
-        getConfessions(1);
-
-
-        //super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_confessions__list_display);
     }
 
-    class MyPagerAdapter extends FragmentPagerAdapter {
-        String[] tabs = {"New", "Hot", "Top"};
 
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position)
-        {
-            MyFragment myFragment = MyFragment.getInstance(position);
-            return myFragment;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return tabs[position];
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,71 +79,56 @@ public class Confessions_List_display extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void getConfessions(int position)
-    {
+
+    void grabJson(String type) {
+
         SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
         String savedAPIKEY = pref.getString("api_KEY", null);
-
-        String url;
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        url = "https://dev.collegeconfessions.party/api/posts/new?apikey=" + savedAPIKEY;
-
-        // Request a string response from the provided URL.
-        final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                parseJSONResponse(response);
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-
-    }
-
-
-    private void parseJSONResponse(String object)
-    {
-        Toast.makeText(this, object, Toast.LENGTH_LONG).show();
-    }
-
-    public static class MyFragment extends Fragment
-    {
-        private TextView textView;
-        public static MyFragment getInstance(int position)
+        if (savedAPIKEY != null)
         {
+            final ProgressDialog loginUser = new ProgressDialog(this);
+            loginUser.setTitle("Loading");
+            loginUser.setMessage("Please wait");
+            loginUser.show();
+            String url;
 
-            MyFragment myFragment = new MyFragment();
-            Bundle args = new Bundle();
-            args.putInt("position", position);
-            myFragment.setArguments(args);
-            return myFragment;
-        }
+            RequestQueue queue = Volley.newRequestQueue(this);
+            url = "https://dev.collegeconfessions.party/api/" + type +"?apikey=" + savedAPIKEY;
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-        {
-            View layout = inflater.inflate(R.layout.fragment_a, container, false);
-            textView = (TextView) layout.findViewById(R.id.position);
-            Bundle bundle = getArguments();
-            if(bundle != null)
+            // Request a string response from the provided URL.
+            final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>()
             {
-                textView.setText("The page selected is" + bundle.getInt("position"));
-            }
-
-            return layout;
+                @Override
+                public void onResponse(String response)
+                {
+                    loginUser.dismiss();
+                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                }
+            },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error)
+                        {
+                            Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+                        }
+                    });
+            queue.add(stringRequest);
         }
     }
 
+    public void TopConfession(View view)
+    {
+        grabJson("top");
+    }
 
+    public void NewConfession(View view)
+    {
+        grabJson("new");
+    }
 
-
+    public void HotConfession(View view)
+    {
+        grabJson("hot");
+    }
 }
