@@ -41,7 +41,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.security.PolicySpi;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -161,7 +164,17 @@ public class Confessions_List_display extends AppCompatActivity
 
                     ConfessionOBJS confessionObject = new ConfessionOBJS();
                     confessionObject.body = obj.getString("p_body");
-                    confessionObject.p_created = obj.getString("p_created");
+                    //confessionObject.p_created =
+                    String dtStart = obj.getString("p_created");
+                    SimpleDateFormat  format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                    try {
+                        Date date = format.parse(dtStart);
+                        Toast.makeText(getApplicationContext(), date.toString(), Toast.LENGTH_LONG).show();
+                        confessionObject.p_created = date.toString();
+                    } catch (ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                     confessionObject.comments = obj.getInt("comments");
                     //confessionObject.is_like = obj.getBoolean("l_is_like");
                     //confessionObject.i_voted = obj.getString("l_voted");
