@@ -128,7 +128,9 @@ public class Confessions_List_display extends AppCompatActivity
                             Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
                         }
                     });
+            Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
             queue.add(stringRequest);
+
         }
     }
 
@@ -136,6 +138,7 @@ public class Confessions_List_display extends AppCompatActivity
     public void TopConfession(View view)
     {
         confessionsList.setAdapter(null);
+        ArrayConfession.clear();
         grabJson("top");
 
     }
@@ -143,6 +146,7 @@ public class Confessions_List_display extends AppCompatActivity
     public void NewConfession(View view)
     {
         confessionsList.setAdapter(null);
+        ArrayConfession.clear();
         grabJson("new");
 
     }
@@ -150,12 +154,15 @@ public class Confessions_List_display extends AppCompatActivity
     public void HotConfession(View view)
     {
         confessionsList.setAdapter(null);
+        ArrayConfession.clear();
         grabJson("hot");
 
     }
 
-    void ParseJsonData(String JSONobj) {
-        if (JSONobj != null) {
+    void ParseJsonData(String JSONobj)
+    {
+        if (JSONobj != null)
+        {
             try {
                 JSONArray array = new JSONArray(JSONobj);
 
