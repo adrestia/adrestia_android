@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ import java.util.Map;
 public class Confessions_List_display extends AppCompatActivity
 {
     ListView confessionsList;
+    ArrayList<ConfessionOBJS> ArrayConfession = new ArrayList<ConfessionOBJS>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -142,7 +144,6 @@ public class Confessions_List_display extends AppCompatActivity
     {
         ConfessionOBJS confessionObject = new ConfessionOBJS();
 
-        ArrayList<ConfessionOBJS> ArrayConfession = new ArrayList<ConfessionOBJS>();
         try
         {
             JSONArray array = new JSONArray(JSONobj);
@@ -157,6 +158,7 @@ public class Confessions_List_display extends AppCompatActivity
                 //confessionObject.i_voted = obj.getString("l_voted");
                 confessionObject.p_downvotes = obj.getInt("p_downvotes");
                 confessionObject.p_id = obj.getInt("p_id");
+                confessionObject.p_upvotes = obj.getInt("p_upvotes");
 
                 Toast.makeText(getApplicationContext(), confessionObject.body, Toast.LENGTH_LONG).show();
 
@@ -180,6 +182,33 @@ public class Confessions_List_display extends AppCompatActivity
         int p_id;
         int p_upvotes;              //number of upvotes
 
+    }
+
+    class ListAdapter extends BaseAdapter
+    {
+
+        @Override
+        public int getCount()
+        {
+            return ArrayConfession.size();
+        }
+
+        @Override
+        public Object getItem(int position)
+        {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position)
+        {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return null;
+        }
     }
 
 
