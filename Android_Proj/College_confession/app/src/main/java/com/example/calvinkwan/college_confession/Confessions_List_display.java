@@ -51,6 +51,7 @@ public class Confessions_List_display extends AppCompatActivity
 
     ArrayList<ConfessionOBJS> ArrayConfession = new ArrayList<ConfessionOBJS>();
     ListAdapter aa = null;
+    ListView confessionsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -131,18 +132,21 @@ public class Confessions_List_display extends AppCompatActivity
 
     public void TopConfession(View view)
     {
+        confessionsList.setAdapter(null);
         grabJson("top");
 
     }
 
     public void NewConfession(View view)
     {
+        confessionsList.setAdapter(null);
         grabJson("new");
 
     }
 
     public void HotConfession(View view)
     {
+        confessionsList.setAdapter(null);
         grabJson("hot");
 
     }
@@ -169,7 +173,7 @@ public class Confessions_List_display extends AppCompatActivity
                     ArrayConfession.add(confessionObject);
                 }
 
-                ListView confessionsList = (ListView) findViewById(R.id.confessionList);
+                confessionsList = (ListView) findViewById(R.id.confessionList);
                 aa = new ListAdapter(this);
                 confessionsList.setAdapter(aa);
             } catch (JSONException e) {
@@ -233,7 +237,6 @@ public class Confessions_List_display extends AppCompatActivity
 
 
             ConfessionOBJS temp = ArrayConfession.get(position);
-            Toast.makeText(getApplicationContext(), "hi guyus", Toast.LENGTH_LONG).show();
             body.setText(temp.body);
             time.setText(temp.p_created);
             comments.setText("Comments: " + temp.comments);
