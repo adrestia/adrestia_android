@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,42 +34,45 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.calvinkwan.college_confession.tabs.SlidingTabLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.security.PolicySpi;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Confessions_List_display extends AppCompatActivity
 {
+    ListView confessionsList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confessions__list_display);
 
+        confessionsList = (ListView) findViewById(R.id.confessionList);
+
     }
 
-
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
         if (id == R.id.newConfession) {
             Intent postIntent = new Intent(getApplicationContext(), PostConfession.class);
             startActivity(postIntent);
@@ -102,7 +106,9 @@ public class Confessions_List_display extends AppCompatActivity
                 public void onResponse(String response)
                 {
                     loginUser.dismiss();
-                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+
+                    ParseJsonData(response);
+
                 }
             },
                     new Response.ErrorListener()
@@ -131,4 +137,50 @@ public class Confessions_List_display extends AppCompatActivity
     {
         grabJson("hot");
     }
+
+    void ParseJsonData(String JSONobj)
+    {
+        ConfessionOBJS confessionObject = new ConfessionOBJS();
+
+        ArrayList<ConfessionOBJS> ArrayConfession = new ArrayList<ConfessionOBJS>();
+        try
+        {
+            JSONArray array = new JSONArray(JSONobj);
+
+            for(int i = 0; i < array.length(); i++)
+            {
+                JSONObject obj = array.getJSONObject(i);
+                confessionObject.body = obj.getString("p_body");
+                confessionObject.p_created = obj.getString("p_created");
+                confessionObject.comments = obj.getInt("comments");
+                //confessionObject.is_like = obj.getBoolean("l_is_like");
+                //confessionObject.i_voted = obj.getString("l_voted");
+                confessionObject.p_downvotes = obj.getInt("p_downvotes");
+                confessionObject.p_id = obj.getInt("p_id");
+
+                Toast.makeText(getApplicationContext(), confessionObject.body, Toast.LENGTH_LONG).show();
+
+                ArrayConfession.add(confessionObject);
+            }
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public class ConfessionOBJS
+    {
+        int comments;               //number of commets
+        Boolean is_like;            //if the individual liked the upvoted or downvoted
+        String i_voted;             //timestamp of when they upvoted
+        String body;                //body of confession
+        String p_created;           //when post was created
+        int p_downvotes;            //number of downvotes
+        int p_id;
+        int p_upvotes;              //number of upvotes
+
+    }
+
+
 }
