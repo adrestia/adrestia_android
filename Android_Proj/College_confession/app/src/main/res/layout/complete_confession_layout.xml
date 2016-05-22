@@ -13,7 +13,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_marginRight="60dp"
         android:text="&quot;I just did something bad&quot; hello world is amazings balls guys i am so sleepy"
-        android:id="@+id/textView"
+        android:id="@+id/body"
         android:layout_marginTop="20dp"
         android:ellipsize="end"
         android:maxLines="2"
@@ -30,14 +30,14 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="34dp"
         android:layout_below="@+id/downvote"
-        android:layout_alignStart="@+id/textView" />
+        android:layout_alignStart="@+id/body" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Reply"
-        android:id="@+id/replyButton"
+        android:text="Comments"
+        android:id="@+id/CommentButton"
         android:layout_alignBottom="@+id/minSincePost"
         android:layout_centerHorizontal="true" />
 
@@ -48,7 +48,7 @@
         android:background="@mipmap/ic_error_black"
         android:scaleType="center"
         android:layout_below="@+id/downvote"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_alignEnd="@+id/body" />
 
     <ImageButton
         android:layout_width="20dp"

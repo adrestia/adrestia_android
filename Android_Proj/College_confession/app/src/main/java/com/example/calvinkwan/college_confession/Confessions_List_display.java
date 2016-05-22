@@ -2,6 +2,7 @@ package com.example.calvinkwan.college_confession;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
@@ -47,8 +48,9 @@ import java.util.Map;
 
 public class Confessions_List_display extends AppCompatActivity
 {
-    ListView confessionsList;
+
     ArrayList<ConfessionOBJS> ArrayConfession = new ArrayList<ConfessionOBJS>();
+    ListAdapter aa = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,7 +58,9 @@ public class Confessions_List_display extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confessions__list_display);
 
-        confessionsList = (ListView) findViewById(R.id.confessionList);
+        grabJson("top");
+
+
 
     }
 
@@ -71,11 +75,9 @@ public class Confessions_List_display extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.newConfession) {
+        if (id == R.id.newConfession)
+        {
             Intent postIntent = new Intent(getApplicationContext(), PostConfession.class);
             startActivity(postIntent);
             //will open new message activity
@@ -86,7 +88,8 @@ public class Confessions_List_display extends AppCompatActivity
     }
 
 
-    void grabJson(String type) {
+    void grabJson(String type)
+    {
 
         SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
         String savedAPIKEY = pref.getString("api_KEY", null);
@@ -125,51 +128,57 @@ public class Confessions_List_display extends AppCompatActivity
         }
     }
 
+
     public void TopConfession(View view)
     {
         grabJson("top");
+
     }
 
     public void NewConfession(View view)
     {
         grabJson("new");
+
     }
 
     public void HotConfession(View view)
     {
         grabJson("hot");
+
     }
 
-    void ParseJsonData(String JSONobj)
-    {
-        ConfessionOBJS confessionObject = new ConfessionOBJS();
+    void ParseJsonData(String JSONobj) {
+        if (JSONobj != null) {
+            try {
+                JSONArray array = new JSONArray(JSONobj);
 
-        try
-        {
-            JSONArray array = new JSONArray(JSONobj);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
 
-            for(int i = 0; i < array.length(); i++)
-            {
-                JSONObject obj = array.getJSONObject(i);
-                confessionObject.body = obj.getString("p_body");
-                confessionObject.p_created = obj.getString("p_created");
-                confessionObject.comments = obj.getInt("comments");
-                //confessionObject.is_like = obj.getBoolean("l_is_like");
-                //confessionObject.i_voted = obj.getString("l_voted");
-                confessionObject.p_downvotes = obj.getInt("p_downvotes");
-                confessionObject.p_id = obj.getInt("p_id");
-                confessionObject.p_upvotes = obj.getInt("p_upvotes");
+                    ConfessionOBJS confessionObject = new ConfessionOBJS();
+                    confessionObject.body = obj.getString("p_body");
+                    confessionObject.p_created = obj.getString("p_created");
+                    confessionObject.comments = obj.getInt("comments");
+                    //confessionObject.is_like = obj.getBoolean("l_is_like");
+                    //confessionObject.i_voted = obj.getString("l_voted");
+                    confessionObject.p_downvotes = obj.getInt("p_downvotes");
+                    confessionObject.p_id = obj.getInt("p_id");
+                    confessionObject.p_upvotes = obj.getInt("p_upvotes");
 
-                Toast.makeText(getApplicationContext(), confessionObject.body, Toast.LENGTH_LONG).show();
 
-                ArrayConfession.add(confessionObject);
+                    ArrayConfession.add(confessionObject);
+                }
+
+                ListView confessionsList = (ListView) findViewById(R.id.confessionList);
+                aa = new ListAdapter(this);
+                confessionsList.setAdapter(aa);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
     }
+
+
 
     public class ConfessionOBJS
     {
@@ -181,11 +190,18 @@ public class Confessions_List_display extends AppCompatActivity
         int p_downvotes;            //number of downvotes
         int p_id;
         int p_upvotes;              //number of upvotes
-
     }
 
     class ListAdapter extends BaseAdapter
     {
+        Context context;
+        ArrayList<String> bodyArray = new ArrayList<String>();
+
+        ListAdapter(Context c)
+        {
+            context = c;
+
+        }
 
         @Override
         public int getCount()
@@ -196,18 +212,34 @@ public class Confessions_List_display extends AppCompatActivity
         @Override
         public Object getItem(int position)
         {
-            return null;
+            return ArrayConfession.get(position);
         }
 
         @Override
         public long getItemId(int position)
         {
-            return 0;
+            return position;
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            return null;
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View row = inflater.inflate(R.layout.complete_confession_layout, parent, false);
+            TextView body = (TextView) row.findViewById(R.id.body);
+            TextView time = (TextView) row.findViewById(R.id.minSincePost);
+            TextView comments = (TextView) row.findViewById(R.id.CommentButton);
+            TextView voteScore = (TextView) row.findViewById(R.id.voteScore);
+
+
+            ConfessionOBJS temp = ArrayConfession.get(position);
+            Toast.makeText(getApplicationContext(), "hi guyus", Toast.LENGTH_LONG).show();
+            body.setText(temp.body);
+            time.setText(temp.p_created);
+            comments.setText("Comments: " + temp.comments);
+            voteScore.setText(temp.p_upvotes - temp.p_downvotes + "");
+
+            return row;
         }
     }
 
