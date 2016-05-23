@@ -35,6 +35,7 @@ public class CommentsActivity extends AppCompatActivity
     ListAdapter comments = null;
     ListView commentsList;
     EditText commentText;
+    TextView voteScore;
 
     int bundlePostID;
     @Override
@@ -45,7 +46,7 @@ public class CommentsActivity extends AppCompatActivity
 
         TextView PostBody = (TextView) findViewById(R.id.body);
         TextView time = (TextView) findViewById(R.id.minSincePost);
-        TextView voteScore = (TextView) findViewById(R.id.voteScore);
+        voteScore = (TextView) findViewById(R.id.voteScore);
 
 
         Bundle bundle = getIntent().getExtras();
@@ -143,6 +144,110 @@ public class CommentsActivity extends AppCompatActivity
                 }
             };
 
+            // Add the request to the RequestQueue.
+            queue.add(stringRequest);
+        }
+    }
+
+    public void CommentPostUpvoting(View view)
+    {
+        SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
+        String savedAPIKEY = pref.getString("api_KEY", null);
+        if (savedAPIKEY != null) {
+            //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
+            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+            String url = "https://dev.collegeconfessions.party/api/posts/upvote?apikey=" + savedAPIKEY;
+
+            // Request a string response from the provided URL.
+            final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
+            {
+                @Override
+                public void onResponse(String response)
+                {
+                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                    JSONObject responseOBJ = null;
+                    try
+                    {
+                        responseOBJ = new JSONObject(response);
+                        String score = responseOBJ.getString("score");
+                        voteScore.setText(score);
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error)
+                        {
+                            //serverResponse.setText("Please make sure your credentials are valid");
+                        }
+                    })
+            {;
+                @Override
+                public Map<String, String> getParams()
+                {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("post_id", bundlePostID +"");
+                    return params;
+                }
+                //https://gist.github.com/mombrea/7250835
+            };
+            // Add the request to the RequestQueue.
+            queue.add(stringRequest);
+        }
+    }
+
+    public void CommentPostDownvoting(View view)
+    {
+        SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
+        String savedAPIKEY = pref.getString("api_KEY", null);
+        if (savedAPIKEY != null) {
+            //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
+            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+            String url = "https://dev.collegeconfessions.party/api/posts/downvote?apikey=" + savedAPIKEY;
+
+            // Request a string response from the provided URL.
+            final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
+            {
+                @Override
+                public void onResponse(String response)
+                {
+                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                    JSONObject responseOBJ = null;
+                    try
+                    {
+                        responseOBJ = new JSONObject(response);
+                        String score = responseOBJ.getString("score");
+                        voteScore.setText(score);
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error)
+                        {
+                            //serverResponse.setText("Please make sure your credentials are valid");
+                        }
+                    })
+            {;
+                @Override
+                public Map<String, String> getParams()
+                {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("post_id", bundlePostID +"");
+                    return params;
+                }
+                //https://gist.github.com/mombrea/7250835
+            };
             // Add the request to the RequestQueue.
             queue.add(stringRequest);
         }
