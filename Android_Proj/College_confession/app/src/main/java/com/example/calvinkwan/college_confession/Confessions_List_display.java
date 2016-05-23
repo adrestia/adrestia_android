@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -22,7 +24,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -63,8 +67,6 @@ public class Confessions_List_display extends AppCompatActivity
         setContentView(R.layout.activity_confessions__list_display);
 
         grabJson("top");
-
-
 
     }
 
@@ -221,6 +223,11 @@ public class Confessions_List_display extends AppCompatActivity
         Context context;
         ArrayList<String> bodyArray = new ArrayList<String>();
 
+        ImageButton upvote = (ImageButton) findViewById(R.id.upvote);
+        ImageButton downVote = (ImageButton) findViewById(R.id.upvote);
+
+
+
         ListAdapter(Context c)
         {
             context = c;
@@ -254,16 +261,28 @@ public class Confessions_List_display extends AppCompatActivity
             TextView time = (TextView) row.findViewById(R.id.minSincePost);
             TextView comments = (TextView) row.findViewById(R.id.CommentButton);
             TextView voteScore = (TextView) row.findViewById(R.id.voteScore);
+            ImageButton Upvoting = (ImageButton) findViewById(R.id.upvote);
+            ImageButton DownVoting = (ImageButton) findViewById(R.id.downvote);
 
 
-            ConfessionOBJS temp = ArrayConfession.get(position);
+            final ConfessionOBJS temp = ArrayConfession.get(position);
             body.setText(temp.body);
             time.setText(temp.p_created);
             comments.setText("Comments: " + temp.comments);
             voteScore.setText(temp.p_upvotes - temp.p_downvotes + "");
 
+            ((ImageButton)row.findViewById(R.id.upvote)).setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
+                }
+            });
+
             return row;
         }
+
     }
 
 
