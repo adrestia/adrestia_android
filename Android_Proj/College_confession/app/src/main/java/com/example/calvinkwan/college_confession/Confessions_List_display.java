@@ -29,6 +29,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,12 +55,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Confessions_List_display extends AppCompatActivity
-{
+public class Confessions_List_display extends AppCompatActivity implements View.OnClickListener {
 
     ArrayList<ConfessionOBJS> ArrayConfession = new ArrayList<ConfessionOBJS>();
     ListAdapter aa = null;
     ListView confessionsList;
+
+    RadioGroup indexPosts;
+    RadioButton newBttn, hotBttn, topBttn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -66,8 +70,48 @@ public class Confessions_List_display extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confessions__list_display);
 
-        grabJson("top");
+        indexPosts = (RadioGroup) findViewById(R.id.RadioGroup);
+        newBttn = (RadioButton) findViewById(R.id.NewSelected);
+        hotBttn = (RadioButton) findViewById(R.id.HotSelected);
+        topBttn = (RadioButton) findViewById(R.id.TopSelect);
 
+        newBttn.setOnClickListener(this);
+        hotBttn.setOnClickListener(this);
+        topBttn.setOnClickListener(this);
+
+        indexPosts.check(topBttn.getId());          //sets default check mark on top posts
+
+        grabJson("top");
+    }
+
+    @Override
+    public void onClick(View v) {
+        int checkRadioID = indexPosts.getCheckedRadioButtonId();
+
+        switch (checkRadioID)
+        {
+            case R.id.NewSelected:
+            {
+                confessionsList.setAdapter(null);
+                ArrayConfession.clear();
+                grabJson("new");
+            }
+            break;
+            case R.id.HotSelected:
+            {
+                confessionsList.setAdapter(null);
+                ArrayConfession.clear();
+                grabJson("hot");
+            }
+            break;
+            case  R.id.TopSelect:
+            {
+                confessionsList.setAdapter(null);
+                ArrayConfession.clear();
+                grabJson("top");
+            }
+            break;
+        }
     }
 
     @Override
@@ -135,8 +179,7 @@ public class Confessions_List_display extends AppCompatActivity
 
         }
     }
-
-
+    /*
     public void TopConfession(View view)
     {
         confessionsList.setAdapter(null);
@@ -160,7 +203,7 @@ public class Confessions_List_display extends AppCompatActivity
         grabJson("hot");
 
     }
-
+    */
     void ParseJsonData(String JSONobj)
     {
         if (JSONobj != null)
