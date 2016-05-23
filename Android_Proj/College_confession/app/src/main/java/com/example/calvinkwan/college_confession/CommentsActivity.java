@@ -1,12 +1,28 @@
 package com.example.calvinkwan.college_confession;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class CommentsActivity extends AppCompatActivity
 {
+
+    int bundlePostID;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -21,7 +37,7 @@ public class CommentsActivity extends AppCompatActivity
         String bundlePostbody = bundle.getString("body");
         String bundlePosttime = bundle.getString("time");
         String bundlePostvoteScore = bundle.getString("voteScore");
-        int bundlePostID = bundle.getInt("postID");
+        bundlePostID = bundle.getInt("postID");
 
         Toast.makeText(getApplicationContext(), bundlePostID + "", Toast.LENGTH_LONG).show();
 
@@ -29,5 +45,46 @@ public class CommentsActivity extends AppCompatActivity
         time.setText(bundlePosttime);
         voteScore.setText(bundlePostvoteScore);
 
+    }
+
+    public void PostComment(View view)
+    {
+        SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
+        String savedAPIKEY = pref.getString("api_KEY", null);
+
+        if (savedAPIKEY != null) {
+            RequestQueue queue = Volley.newRequestQueue(this);
+            String url = "https://dev.collegeconfessions.party/api/comments?apikey=" + savedAPIKEY;
+
+            // Request a string response from the provided URL.
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response)
+                {
+                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                }
+            },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error)
+                        {
+                            Toast.makeText(getApplicationContext(), "An error occured", Toast.LENGTH_LONG).show();
+                        }
+                    })
+
+            {;
+                @Override
+                protected Map<String, String> getParams()
+                {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("post_id", bundlePostID +"");
+                    return params;
+                }
+            };
+
+            // Add the request to the RequestQueue.
+            queue.add(stringRequest);
+        }
     }
 }

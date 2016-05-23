@@ -165,8 +165,6 @@ public class RegisterActivity extends AppCompatActivity
                         }
                         catch (Exception e)
                         {
-
-
                         }
                     }
                 },
