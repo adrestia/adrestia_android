@@ -165,10 +165,12 @@ public class Confessions_List_display extends AppCompatActivity
     {
         if (JSONobj != null)
         {
-            try {
+            try
+            {
                 JSONArray array = new JSONArray(JSONobj);
 
-                for (int i = 0; i < array.length(); i++) {
+                for (int i = 0; i < array.length(); i++)
+                {
                     JSONObject obj = array.getJSONObject(i);
 
                     ConfessionOBJS confessionObject = new ConfessionOBJS();
@@ -203,7 +205,6 @@ public class Confessions_List_display extends AppCompatActivity
                         confessionObject.is_like = obj.getBoolean("l_is_like");
                     }
 
-
                     ArrayConfession.add(confessionObject);
                 }
 
@@ -226,7 +227,7 @@ public class Confessions_List_display extends AppCompatActivity
         String body;                //body of confession
         String p_created;           //when post was created
         int p_downvotes;            //number of downvotes
-        int p_id;
+        int p_id;                   //post ID
         int p_upvotes;              //number of upvotes
     }
 
@@ -274,7 +275,7 @@ public class Confessions_List_display extends AppCompatActivity
             final TextView comments = (TextView) row.findViewById(R.id.CommentButton);
             final TextView voteScore = (TextView) row.findViewById(R.id.voteScore);
             ImageButton report = (ImageButton) row.findViewById(R.id.reportPost);
-            ImageButton Upvoting = (ImageButton) findViewById(R.id.upvote);
+            final ImageButton Upvoting = (ImageButton) findViewById(R.id.upvote);
             ImageButton DownVoting = (ImageButton) findViewById(R.id.downvote);
 
 
@@ -341,6 +342,15 @@ public class Confessions_List_display extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
+
+                }
+            });
+
+            ((ImageButton)row.findViewById(R.id.upvote)).setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
                    SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
                     String savedAPIKEY = pref.getString("api_KEY", null);
                     if (savedAPIKEY != null) {
@@ -369,7 +379,8 @@ public class Confessions_List_display extends AppCompatActivity
                                 new Response.ErrorListener()
                                 {
                                     @Override
-                                    public void onErrorResponse(VolleyError error) {
+                                    public void onErrorResponse(VolleyError error)
+                                    {
                                         //serverResponse.setText("Please make sure your credentials are valid");
                                     }
                                 })
@@ -378,7 +389,8 @@ public class Confessions_List_display extends AppCompatActivity
                             ;
 
                             @Override
-                            public Map<String, String> getParams() {
+                            public Map<String, String> getParams()
+                            {
                                 Map<String, String> params = new HashMap<String, String>();
                                 params.put("post_id", temp.p_id + "");
                                 return params;
@@ -427,18 +439,20 @@ public class Confessions_List_display extends AppCompatActivity
                                 }
                             }
                         },
-                                new Response.ErrorListener() {
+                                new Response.ErrorListener()
+                                {
                                     @Override
-                                    public void onErrorResponse(VolleyError error) {
+                                    public void onErrorResponse(VolleyError error)
+                                    {
                                         //serverResponse.setText("Please make sure your credentials are valid");
                                     }
                                 })
-
                         {
                             ;
 
                             @Override
-                            public Map<String, String> getParams() {
+                            public Map<String, String> getParams()
+                            {
                                 Map<String, String> params = new HashMap<String, String>();
                                 params.put("post_id", temp.p_id + "");
                                 return params;
