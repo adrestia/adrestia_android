@@ -337,12 +337,16 @@ public class Confessions_List_display extends AppCompatActivity
 
             */
 
-            ((ImageButton)row.findViewById(R.id.upvote)).setOnClickListener(new View.OnClickListener()
+            ((TextView)row.findViewById(R.id.CommentButton)).setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-
+                    Intent intent = new Intent(getApplicationContext(), CommentsActivity.class);
+                    intent.putExtra("body", temp.body);
+                    intent.putExtra("voteScore", voteScore.getText());
+                    intent.putExtra("time", temp.p_created);
+                    startActivity(intent);
                 }
             });
 

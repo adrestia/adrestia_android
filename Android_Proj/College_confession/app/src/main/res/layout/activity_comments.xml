@@ -3,8 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:paddingBottom="20dp">
+    android:paddingTop="10dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,7 +19,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/i">
 
         <TextView
@@ -92,6 +91,13 @@
                 android:layout_alignEnd="@+id/upvote" />
         </RelativeLayout>
 
+        <ListView
+            android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/listView2"
+            android:layout_below="@+id/reportPost" />
     </RelativeLayout>
+
 
 </RelativeLayout>
