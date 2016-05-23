@@ -29,6 +29,9 @@ public class CommentsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
+
+        GetJSONcomments();
+
         TextView PostBody = (TextView) findViewById(R.id.body);
         TextView time = (TextView) findViewById(R.id.minSincePost);
         TextView voteScore = (TextView) findViewById(R.id.voteScore);
@@ -39,12 +42,46 @@ public class CommentsActivity extends AppCompatActivity
         String bundlePostvoteScore = bundle.getString("voteScore");
         bundlePostID = bundle.getInt("postID");
 
-        Toast.makeText(getApplicationContext(), bundlePostID + "", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), bundlePostID + "", Toast.LENGTH_LONG).show();
 
         PostBody.setText(bundlePostbody);
         time.setText(bundlePosttime);
         voteScore.setText(bundlePostvoteScore);
 
+
+    }
+
+    public void GetJSONcomments()
+    {
+        SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
+        String savedAPIKEY = pref.getString("api_KEY", null);
+
+        if (savedAPIKEY != null) {
+            RequestQueue queue = Volley.newRequestQueue(this);
+            //String url = //"https://dev.collegeconfessions.party/api/posts/" + bundlePostID + "?apikey=" + savedAPIKEY;
+                String url = "https://dev.collegeconfessions.party/api/posts/16?apikey=6c4da0cf269442fdb37b81e09692997e";
+
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>()
+            {
+                @Override
+                public void onResponse(String response)
+                {
+                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                }
+            },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error)
+                        {
+                            Toast.makeText(getApplicationContext(), "An error occured", Toast.LENGTH_LONG).show();
+                        }
+                    })
+
+            {;};
+            // Add the request to the RequestQueue.
+            queue.add(stringRequest);
+        }
     }
 
     public void PostComment(View view)

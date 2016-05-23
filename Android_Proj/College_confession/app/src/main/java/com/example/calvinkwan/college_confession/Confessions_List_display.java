@@ -78,7 +78,6 @@ public class Confessions_List_display extends AppCompatActivity implements View.
         newBttn.setOnClickListener(this);
         hotBttn.setOnClickListener(this);
         topBttn.setOnClickListener(this);
-
         indexPosts.check(topBttn.getId());          //sets default check mark on top posts
 
         grabJson("top");
@@ -179,31 +178,6 @@ public class Confessions_List_display extends AppCompatActivity implements View.
 
         }
     }
-    /*
-    public void TopConfession(View view)
-    {
-        confessionsList.setAdapter(null);
-        ArrayConfession.clear();
-        grabJson("top");
-
-    }
-
-    public void NewConfession(View view)
-    {
-        confessionsList.setAdapter(null);
-        ArrayConfession.clear();
-        grabJson("new");
-
-    }
-
-    public void HotConfession(View view)
-    {
-        confessionsList.setAdapter(null);
-        ArrayConfession.clear();
-        grabJson("hot");
-
-    }
-    */
     void ParseJsonData(String JSONobj)
     {
         if (JSONobj != null)
