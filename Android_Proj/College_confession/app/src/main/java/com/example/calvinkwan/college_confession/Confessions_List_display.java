@@ -346,6 +346,7 @@ public class Confessions_List_display extends AppCompatActivity
                     intent.putExtra("body", temp.body);
                     intent.putExtra("voteScore", voteScore.getText());
                     intent.putExtra("time", temp.p_created);
+                    intent.putExtra("postID", temp.p_id);
                     startActivity(intent);
                 }
             });
