@@ -172,15 +172,36 @@ public class Confessions_List_display extends AppCompatActivity
                     JSONObject obj = array.getJSONObject(i);
 
                     ConfessionOBJS confessionObject = new ConfessionOBJS();
-                    confessionObject.body = obj.getString("p_body");
-                    //confessionObject.p_created =
-                    //confessionObject.p_created = obj.getString("p_created");
-                    confessionObject.comments = obj.getInt("comments");
-                    //confessionObject.is_like = obj.getBoolean("l_is_like");
-                    //confessionObject.i_voted = obj.getString("l_voted");
-                    confessionObject.p_downvotes = obj.getInt("p_downvotes");
-                    confessionObject.p_id = obj.getInt("p_id");
-                    confessionObject.p_upvotes = obj.getInt("p_upvotes");
+                    if(obj.has("p_body")) {
+                        confessionObject.body = obj.getString("p_body");
+                    }
+                    if(obj.has("p_created"))
+                    {
+                        confessionObject.p_created = obj.getString("p_created");
+                    }
+                    if(obj.has("comments"))
+                    {
+                        confessionObject.comments = obj.getInt("comments");
+                    }
+                    if(obj.has("l_voted"))
+                    {
+                        confessionObject.i_voted = obj.getString("l_voted");
+                    }
+                    if(obj.has("p_downvotes")) {
+                        confessionObject.p_downvotes = obj.getInt("p_downvotes");
+                    }
+                    if(obj.has("p_id"))
+                    {
+                        confessionObject.p_id = obj.getInt("p_id");
+                    }
+                    if(obj.has("p_upvotes"))
+                    {
+                        confessionObject.p_upvotes = obj.getInt("p_upvotes");
+                    }
+                    if(obj.has("l_is_like"))
+                    {
+                        confessionObject.is_like = obj.getBoolean("l_is_like");
+                    }
 
 
                     ArrayConfession.add(confessionObject);
@@ -248,10 +269,11 @@ public class Confessions_List_display extends AppCompatActivity
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = inflater.inflate(R.layout.complete_confession_layout, parent, false);
-            TextView body = (TextView) row.findViewById(R.id.body);
-            TextView time = (TextView) row.findViewById(R.id.minSincePost);
-            TextView comments = (TextView) row.findViewById(R.id.CommentButton);
-            TextView voteScore = (TextView) row.findViewById(R.id.voteScore);
+            final TextView body = (TextView) row.findViewById(R.id.body);
+            final TextView time = (TextView) row.findViewById(R.id.minSincePost);
+            final TextView comments = (TextView) row.findViewById(R.id.CommentButton);
+            final TextView voteScore = (TextView) row.findViewById(R.id.voteScore);
+            ImageButton report = (ImageButton) row.findViewById(R.id.reportPost);
             ImageButton Upvoting = (ImageButton) findViewById(R.id.upvote);
             ImageButton DownVoting = (ImageButton) findViewById(R.id.downvote);
 
@@ -261,6 +283,58 @@ public class Confessions_List_display extends AppCompatActivity
             time.setText(temp.p_created);
             comments.setText("Comments: " + temp.comments);
             voteScore.setText(temp.p_upvotes - temp.p_downvotes + "");
+
+            /*
+            ((ImageButton)row.findViewById(R.id.reportPost)).setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
+                    String savedAPIKEY = pref.getString("api_KEY", null);
+                    if (savedAPIKEY != null) {
+                        //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
+                        RequestQueue queue = Volley.newRequestQueue(context);
+                        String url = "https://dev.collegeconfessions.party/api/posts/report?apikey=" + savedAPIKEY;
+
+                        // Request a string response from the provided URL.
+                        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response)
+                            {
+                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                            }
+                        },
+                                new Response.ErrorListener()
+                                {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error)
+                                    {
+                                        //serverResponse.setText("Please make sure your credentials are valid");
+                                    }
+                                })
+
+                        {;
+                            @Override
+                            public Map<String, String> getParams()
+                            {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("post_id", 1 + "");
+                                return params;
+                            }
+
+                            //https://gist.github.com/mombrea/7250835
+
+                        };
+
+                        // Add the request to the RequestQueue.
+                        queue.add(stringRequest);
+                    }
+                }
+            });
+
+            */
 
             ((ImageButton)row.findViewById(R.id.upvote)).setOnClickListener(new View.OnClickListener()
             {
@@ -281,6 +355,9 @@ public class Confessions_List_display extends AppCompatActivity
                             public void onResponse(String response)
                             {
                                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                                temp.p_upvotes++;
+                                voteScore.setText(temp.p_upvotes - temp.p_downvotes + "");
+
                             }
                         },
                                 new Response.ErrorListener()
@@ -330,7 +407,9 @@ public class Confessions_List_display extends AppCompatActivity
                             @Override
                             public void onResponse(String response)
                             {
-                                //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                                temp.p_downvotes--;
+                                voteScore.setText(temp.p_upvotes - temp.p_downvotes + "");
                             }
                         },
                                 new Response.ErrorListener()
