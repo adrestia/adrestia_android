@@ -1,9 +1,12 @@
 package com.example.calvinkwan.college_confession;
 
+import android.app.VoiceInteractor;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,13 +17,22 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CommentsActivity extends AppCompatActivity
 {
+
+    ArrayList<CommentsObjects> ArrayComments = new ArrayList<CommentsObjects>();
+    JSONObject commentOBJ = null;
+    ListAdapter comments = null;
+    ListView commentsList;
 
     int bundlePostID;
     @Override
@@ -28,9 +40,6 @@ public class CommentsActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
-
-
-        GetJSONcomments();
 
         TextView PostBody = (TextView) findViewById(R.id.body);
         TextView time = (TextView) findViewById(R.id.minSincePost);
@@ -49,24 +58,27 @@ public class CommentsActivity extends AppCompatActivity
         voteScore.setText(bundlePostvoteScore);
 
 
+        GetJSONcomments();
     }
 
     public void GetJSONcomments()
     {
+        commentOBJ = null;
         SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
         String savedAPIKEY = pref.getString("api_KEY", null);
 
         if (savedAPIKEY != null) {
             RequestQueue queue = Volley.newRequestQueue(this);
-            //String url = //"https://dev.collegeconfessions.party/api/posts/" + bundlePostID + "?apikey=" + savedAPIKEY;
-                String url = "https://dev.collegeconfessions.party/api/posts/16?apikey=6c4da0cf269442fdb37b81e09692997e";
+            String url = "https://dev.collegeconfessions.party/api/posts/" + bundlePostID + "?apikey=" + savedAPIKEY;
+            //String url = "https://dev.collegeconfessions.party/api/posts/16?apikey=6c4da0cf269442fdb37b81e09692997e";
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>()
             {
                 @Override
                 public void onResponse(String response)
                 {
-                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                    ParseJson(response);
                 }
             },
                     new Response.ErrorListener()
@@ -128,9 +140,39 @@ public class CommentsActivity extends AppCompatActivity
     public class CommentsObjects
     {
         String commentBody;
+        ArrayList<String> dates = new ArrayList<String>();
         int commentD_votes;
         int commentUp_votes;
         Boolean Is_Like;
         Boolean Is_Voted;
+    }
+
+    void ParseJson(String JSONOBJECT)
+    {
+        if(JSONOBJECT != null)
+        {
+            try
+            {
+                commentOBJ = new JSONObject(JSONOBJECT);
+
+                JSONArray commentsARR = commentOBJ.getJSONArray("comments");
+                Toast.makeText(getApplicationContext(), commentsARR.length() + "", Toast.LENGTH_LONG).show();
+
+                for(int i = 0; i < commentsARR.length(); i++)
+                {
+                    JSONObject obj = commentsARR.getJSONObject(i);
+
+                    CommentsObjects commentOBJS = new CommentsObjects();
+                    if(obj.has("c_body"))
+                    {
+                        commentOBJS.commentBody = obj.getString("p_body");
+                    }
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 }
