@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class CommentsActivity extends AppCompatActivity
     JSONObject commentOBJ = null;
     ListAdapter comments = null;
     ListView commentsList;
+    EditText commentText;
 
     int bundlePostID;
     @Override
@@ -45,13 +47,14 @@ public class CommentsActivity extends AppCompatActivity
         TextView time = (TextView) findViewById(R.id.minSincePost);
         TextView voteScore = (TextView) findViewById(R.id.voteScore);
 
+
         Bundle bundle = getIntent().getExtras();
         String bundlePostbody = bundle.getString("body");
         String bundlePosttime = bundle.getString("time");
         String bundlePostvoteScore = bundle.getString("voteScore");
         bundlePostID = bundle.getInt("postID");
 
-        //Toast.makeText(getApplicationContext(), bundlePostID + "", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), bundlePostID + "", Toast.LENGTH_LONG).show();
 
         PostBody.setText(bundlePostbody);
         time.setText(bundlePosttime);
@@ -101,6 +104,12 @@ public class CommentsActivity extends AppCompatActivity
         SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
         String savedAPIKEY = pref.getString("api_KEY", null);
 
+        commentText = (EditText) findViewById(R.id.commentText);
+
+        String commentBody = commentText.getText().toString();
+
+        Toast.makeText(getApplicationContext(), commentBody, Toast.LENGTH_LONG).show();
+
         if (savedAPIKEY != null) {
             RequestQueue queue = Volley.newRequestQueue(this);
             String url = "https://dev.collegeconfessions.party/api/comments?apikey=" + savedAPIKEY;
@@ -111,6 +120,7 @@ public class CommentsActivity extends AppCompatActivity
                 public void onResponse(String response)
                 {
                     Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                    commentText.setText("");
                 }
             },
                     new Response.ErrorListener()
@@ -128,6 +138,7 @@ public class CommentsActivity extends AppCompatActivity
                 {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("post_id", bundlePostID +"");
+                    params.put("body",commentText.getText().toString());
                     return params;
                 }
             };
@@ -140,11 +151,12 @@ public class CommentsActivity extends AppCompatActivity
     public class CommentsObjects
     {
         String commentBody;
-        ArrayList<String> dates = new ArrayList<String>();
+        ArrayList<String> dateCreated = new ArrayList<String>();
+        int commentID;
         int commentD_votes;
         int commentUp_votes;
         Boolean Is_Like;
-        Boolean Is_Voted;
+        ArrayList<String> dateVoted = new ArrayList<String>();          //date of upvote and downvote
     }
 
     void ParseJson(String JSONOBJECT)
@@ -156,17 +168,44 @@ public class CommentsActivity extends AppCompatActivity
                 commentOBJ = new JSONObject(JSONOBJECT);
 
                 JSONArray commentsARR = commentOBJ.getJSONArray("comments");
-                Toast.makeText(getApplicationContext(), commentsARR.length() + "", Toast.LENGTH_LONG).show();
+
+                //.Toast.makeText(getApplicationContext(), commentsARR.length() + "", Toast.LENGTH_LONG).show();
 
                 for(int i = 0; i < commentsARR.length(); i++)
                 {
                     JSONObject obj = commentsARR.getJSONObject(i);
 
                     CommentsObjects commentOBJS = new CommentsObjects();
+
+                    //Toast.makeText(getApplicationContext(), commentsARR.length() + "", Toast.LENGTH_LONG).show();
                     if(obj.has("c_body"))
                     {
-                        commentOBJS.commentBody = obj.getString("p_body");
+                        commentOBJS.commentBody = obj.getString("c_body");
+                        Toast.makeText(getApplicationContext(), commentOBJS.commentBody, Toast.LENGTH_LONG).show();
                     }
+                    if(obj.has("c_downvotes"))
+                    {
+                        //Toast.makeText(getApplicationContext(), "downvotres", Toast.LENGTH_LONG).show();
+                        commentOBJS.commentD_votes = obj.getInt("c_downvotes");
+                    }
+                    if(obj.has("c_id"))
+                    {
+                        //Toast.makeText(getApplicationContext(), "comment id", Toast.LENGTH_LONG).show();
+                        commentOBJS.commentID = obj.getInt("c_id");
+                    }
+                    if(obj.has("c_upvotes"))
+                    {
+                        //Toast.makeText(getApplicationContext(), "upvotes", Toast.LENGTH_LONG).show();
+                        commentOBJS.commentUp_votes = obj.getInt("c_upvotes");
+                    }
+                    if(obj.has("l_is_like"))
+                    {
+                        //Toast.makeText(getApplicationContext(), "is liked", Toast.LENGTH_LONG).show();
+                        commentOBJS.Is_Like = obj.getBoolean("l_is_like");
+                    }
+
+                    Toast.makeText(getApplicationContext(), "did it make it to the end", Toast.LENGTH_LONG).show();
+                    ArrayComments.add(commentOBJS);
                 }
             }
             catch (JSONException e)
@@ -175,4 +214,6 @@ public class CommentsActivity extends AppCompatActivity
             }
         }
     }
+
+
 }
