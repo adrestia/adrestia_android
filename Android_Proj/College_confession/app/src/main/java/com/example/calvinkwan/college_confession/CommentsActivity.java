@@ -124,4 +124,13 @@ public class CommentsActivity extends AppCompatActivity
             queue.add(stringRequest);
         }
     }
+
+    public class CommentsObjects
+    {
+        String commentBody;
+        int commentD_votes;
+        int commentUp_votes;
+        Boolean Is_Like;
+        Boolean Is_Voted;
+    }
 }
