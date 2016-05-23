@@ -280,7 +280,7 @@ public class Confessions_List_display extends AppCompatActivity
 
             final ConfessionOBJS temp = ArrayConfession.get(position);
             body.setText(temp.body);
-            time.setText(temp.p_created);
+            //time.setText(temp.p_created);
             comments.setText("Comments: " + temp.comments);
             voteScore.setText(temp.p_upvotes - temp.p_downvotes + "");
 
@@ -341,7 +341,7 @@ public class Confessions_List_display extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
-                    SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
+                   SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
                     String savedAPIKEY = pref.getString("api_KEY", null);
                     if (savedAPIKEY != null) {
                         //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
@@ -349,30 +349,36 @@ public class Confessions_List_display extends AppCompatActivity
                         String url = "https://dev.collegeconfessions.party/api/posts/upvote?apikey=" + savedAPIKEY;
 
                         // Request a string response from the provided URL.
-                        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
-                        {
+                        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                             @Override
-                            public void onResponse(String response)
-                            {
+                            public void onResponse(String response) {
                                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-                                temp.p_upvotes++;
-                                voteScore.setText(temp.p_upvotes - temp.p_downvotes + "");
-
+                                JSONObject responseOBJ = null;
+                                try
+                                {
+                                    responseOBJ = new JSONObject(response);
+                                    String score = responseOBJ.getString("score");
+                                    voteScore.setText(score);
+                                }
+                                catch (JSONException e)
+                                {
+                                    e.printStackTrace();
+                                }
                             }
                         },
                                 new Response.ErrorListener()
                                 {
                                     @Override
-                                    public void onErrorResponse(VolleyError error)
-                                    {
+                                    public void onErrorResponse(VolleyError error) {
                                         //serverResponse.setText("Please make sure your credentials are valid");
                                     }
                                 })
 
-                        {;
+                        {
+                            ;
+
                             @Override
-                            public Map<String, String> getParams()
-                            {
+                            public Map<String, String> getParams() {
                                 Map<String, String> params = new HashMap<String, String>();
                                 params.put("post_id", temp.p_id + "");
                                 return params;
@@ -385,6 +391,7 @@ public class Confessions_List_display extends AppCompatActivity
                         // Add the request to the RequestQueue.
                         queue.add(stringRequest);
                     }
+
                 }
             });
 
@@ -402,29 +409,36 @@ public class Confessions_List_display extends AppCompatActivity
                         String url = "https://dev.collegeconfessions.party/api/posts/downvote?apikey=" + savedAPIKEY;
 
                         // Request a string response from the provided URL.
-                        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
-                        {
+                        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response)
                             {
                                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-                                temp.p_downvotes--;
-                                voteScore.setText(temp.p_upvotes - temp.p_downvotes + "");
+                                JSONObject responseOBJ = null;
+                                try
+                                {
+                                    responseOBJ = new JSONObject(response);
+                                    String score = responseOBJ.getString("score");
+                                    voteScore.setText(score);
+                                }
+                                catch (JSONException e)
+                                {
+                                    e.printStackTrace();
+                                }
                             }
                         },
-                                new Response.ErrorListener()
-                                {
+                                new Response.ErrorListener() {
                                     @Override
-                                    public void onErrorResponse(VolleyError error)
-                                    {
+                                    public void onErrorResponse(VolleyError error) {
                                         //serverResponse.setText("Please make sure your credentials are valid");
                                     }
                                 })
 
-                        {;
+                        {
+                            ;
+
                             @Override
-                            public Map<String, String> getParams()
-                            {
+                            public Map<String, String> getParams() {
                                 Map<String, String> params = new HashMap<String, String>();
                                 params.put("post_id", temp.p_id + "");
                                 return params;
@@ -437,6 +451,7 @@ public class Confessions_List_display extends AppCompatActivity
                         // Add the request to the RequestQueue.
                         queue.add(stringRequest);
                     }
+
                 }
             });
 
