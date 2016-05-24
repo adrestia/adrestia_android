@@ -1,4 +1,4 @@
-package com.example.calvinkwan.college_confession;
+package com.calvinkwan.college_confession;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.view.View;
 import android.widget.TextView;
 import android.text.Editable;
+
+import com.example.calvinkwan.college_confession.R;
 
 /**
  * Created by Tan on 5/7/2016.

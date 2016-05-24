@@ -1,4 +1,4 @@
-package com.example.calvinkwan.college_confession.tabs;
+package com.calvinkwan.college_confession.tabs;
 
 /**
  * Created by CalvinKwan on 4/22/2016.

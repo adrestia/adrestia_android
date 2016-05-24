@@ -1,4 +1,4 @@
-package com.example.calvinkwan.college_confession;
+package com.calvinkwan.college_confession;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.calvinkwan.college_confession.R;
 
 import org.json.JSONObject;
 

@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.calvinkwan.college_confession.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,28 +20,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Confessions_List_display"
+            android:name="com.calvinkwan.college_confession.Confessions_List_display"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="com.calvinkwan.college_confession.RegisterActivity"
             android:screenOrientation="portrait">
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.calvinkwan.college_confession.MainActivity" />
+                android:value="com.calvinkwan.college_confession.MainActivity" />
         </activity>
         <activity
-            android:name=".PostConfession"
+            android:name="com.calvinkwan.college_confession.PostConfession"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.calvinkwan.college_confession.Confessions_List_display" />
+                android:value="com.calvinkwan.college_confession.Confessions_List_display" />
         </activity>
-        <activity android:name=".CommentsActivity"
+        <activity android:name="com.calvinkwan.college_confession.CommentsActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.calvinkwan.college_confession.Confessions_List_display" />
+                android:value="com.calvinkwan.college_confession.Confessions_List_display" />
         </activity>
     </application>
 
