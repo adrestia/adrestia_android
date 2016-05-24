@@ -1,12 +1,18 @@
 package com.example.calvinkwan.college_confession;
 
 import android.app.VoiceInteractor;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,20 +34,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CommentsActivity extends AppCompatActivity
-{
+public class CommentsActivity extends AppCompatActivity {
 
     ArrayList<CommentsObjects> ArrayComments = new ArrayList<CommentsObjects>();
     JSONObject commentOBJ = null;
-    ListAdapter comments = null;
+    ListAdapter commentAdapter = null;
     ListView commentsList;
     EditText commentText;
     TextView voteScore;
 
     int bundlePostID;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
@@ -56,7 +61,7 @@ public class CommentsActivity extends AppCompatActivity
         String bundlePostvoteScore = bundle.getString("voteScore");
         bundlePostID = bundle.getInt("postID");
 
-        Toast.makeText(getApplicationContext(), bundlePostID + "", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), bundlePostID + "", Toast.LENGTH_LONG).show();
 
         PostBody.setText(bundlePostbody);
         time.setText(bundlePosttime);
@@ -66,8 +71,7 @@ public class CommentsActivity extends AppCompatActivity
         GetJSONcomments();
     }
 
-    public void GetJSONcomments()
-    {
+    public void GetJSONcomments() {
         commentOBJ = null;
         SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
         String savedAPIKEY = pref.getString("api_KEY", null);
@@ -77,32 +81,29 @@ public class CommentsActivity extends AppCompatActivity
             String url = "https://dev.collegeconfessions.party/api/posts/" + bundlePostID + "?apikey=" + savedAPIKEY;
             //String url = "https://dev.collegeconfessions.party/api/posts/16?apikey=6c4da0cf269442fdb37b81e09692997e";
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>()
-            {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
-                public void onResponse(String response)
-                {
+                public void onResponse(String response) {
                     //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                     ParseJson(response);
                 }
             },
-                    new Response.ErrorListener()
-                    {
+                    new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error)
-                        {
+                        public void onErrorResponse(VolleyError error) {
                             Toast.makeText(getApplicationContext(), "An error occured", Toast.LENGTH_LONG).show();
                         }
                     })
 
-            {;};
+            {
+                ;
+            };
             // Add the request to the RequestQueue.
             queue.add(stringRequest);
         }
     }
 
-    public void PostComment(View view)
-    {
+    public void PostComment(View view) {
         SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
         String savedAPIKEY = pref.getString("api_KEY", null);
 
@@ -119,28 +120,26 @@ public class CommentsActivity extends AppCompatActivity
             // Request a string response from the provided URL.
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
-                public void onResponse(String response)
-                {
+                public void onResponse(String response) {
                     Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                     commentText.setText("");
                 }
             },
-                    new Response.ErrorListener()
-                    {
+                    new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error)
-                        {
+                        public void onErrorResponse(VolleyError error) {
                             Toast.makeText(getApplicationContext(), "An error occured", Toast.LENGTH_LONG).show();
                         }
                     })
 
-            {;
+            {
+                ;
+
                 @Override
-                protected Map<String, String> getParams()
-                {
+                protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("post_id", bundlePostID +"");
-                    params.put("body",commentText.getText().toString());
+                    params.put("post_id", bundlePostID + "");
+                    params.put("body", commentText.getText().toString());
                     return params;
                 }
             };
@@ -150,8 +149,7 @@ public class CommentsActivity extends AppCompatActivity
         }
     }
 
-    public void CommentPostUpvoting(View view)
-    {
+    public void CommentPostUpvoting(View view) {
         SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
         String savedAPIKEY = pref.getString("api_KEY", null);
         if (savedAPIKEY != null) {
@@ -160,39 +158,32 @@ public class CommentsActivity extends AppCompatActivity
             String url = "https://dev.collegeconfessions.party/api/posts/upvote?apikey=" + savedAPIKEY;
 
             // Request a string response from the provided URL.
-            final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
-            {
+            final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
-                public void onResponse(String response)
-                {
+                public void onResponse(String response) {
                     //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                     JSONObject responseOBJ = null;
-                    try
-                    {
+                    try {
                         responseOBJ = new JSONObject(response);
                         String score = responseOBJ.getString("score");
                         voteScore.setText(score);
-                    }
-                    catch (JSONException e)
-                    {
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             },
-                    new Response.ErrorListener()
-                    {
+                    new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error)
-                        {
+                        public void onErrorResponse(VolleyError error) {
                             //serverResponse.setText("Please make sure your credentials are valid");
                         }
-                    })
-            {;
+                    }) {
+                ;
+
                 @Override
-                public Map<String, String> getParams()
-                {
+                public Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("post_id", bundlePostID +"");
+                    params.put("post_id", bundlePostID + "");
                     return params;
                 }
                 //https://gist.github.com/mombrea/7250835
@@ -202,8 +193,7 @@ public class CommentsActivity extends AppCompatActivity
         }
     }
 
-    public void CommentPostDownvoting(View view)
-    {
+    public void CommentPostDownvoting(View view) {
         SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
         String savedAPIKEY = pref.getString("api_KEY", null);
         if (savedAPIKEY != null) {
@@ -212,39 +202,32 @@ public class CommentsActivity extends AppCompatActivity
             String url = "https://dev.collegeconfessions.party/api/posts/downvote?apikey=" + savedAPIKEY;
 
             // Request a string response from the provided URL.
-            final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
-            {
+            final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
-                public void onResponse(String response)
-                {
+                public void onResponse(String response) {
                     Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                     JSONObject responseOBJ = null;
-                    try
-                    {
+                    try {
                         responseOBJ = new JSONObject(response);
                         String score = responseOBJ.getString("score");
                         voteScore.setText(score);
-                    }
-                    catch (JSONException e)
-                    {
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             },
-                    new Response.ErrorListener()
-                    {
+                    new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error)
-                        {
+                        public void onErrorResponse(VolleyError error) {
                             //serverResponse.setText("Please make sure your credentials are valid");
                         }
-                    })
-            {;
+                    }) {
+                ;
+
                 @Override
-                public Map<String, String> getParams()
-                {
+                public Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("post_id", bundlePostID +"");
+                    params.put("post_id", bundlePostID + "");
                     return params;
                 }
                 //https://gist.github.com/mombrea/7250835
@@ -265,12 +248,9 @@ public class CommentsActivity extends AppCompatActivity
         ArrayList<String> dateVoted = new ArrayList<String>();          //date of upvote and downvote
     }
 
-    void ParseJson(String JSONOBJECT)
-    {
-        if(JSONOBJECT != null)
-        {
-            try
-            {
+    void ParseJson(String JSONOBJECT) {
+        if (JSONOBJECT != null) {
+            try {
                 commentOBJ = new JSONObject(JSONOBJECT);
 
                 JSONArray commentsARR = commentOBJ.getJSONArray("comments");
@@ -278,7 +258,7 @@ public class CommentsActivity extends AppCompatActivity
 
                 //.Toast.makeText(getApplicationContext(), commentsARR.length() + "", Toast.LENGTH_LONG).show();
 
-                for(int i = 0; i < commentsARR.length(); i++) {
+                for (int i = 0; i < commentsARR.length(); i++) {
                     JSONObject obj = commentsARR.getJSONObject(i);
 
                     CommentsObjects commentOBJS = new CommentsObjects();
@@ -297,24 +277,92 @@ public class CommentsActivity extends AppCompatActivity
                         //Toast.makeText(getApplicationContext(), "comment id", Toast.LENGTH_LONG).show();
                         commentOBJS.commentID = obj.getInt("c_id");
                     }
-                    /*if (obj.has("c_upvotes")) {
+                    if (obj.has("c_upvotes")) {
                         //Toast.makeText(getApplicationContext(), "upvotes", Toast.LENGTH_LONG).show();
                         commentOBJS.commentUp_votes = obj.getInt("c_upvotes");
                     }
+
+                    /*
                     if (obj.has("l_is_like")) {
                         //Toast.makeText(getApplicationContext(), "is liked", Toast.LENGTH_LONG).show();
                         commentOBJS.Is_Like = obj.getBoolean("l_is_like");
-                    }*/
+                    }
+                    */
 
-                    Toast.makeText(getApplicationContext(), "did it make it to the end", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "did it make it to the end", Toast.LENGTH_LONG).show();
                     ArrayComments.add(commentOBJS);
                 }
-            }
-            catch (JSONException e)
-            {
+
+                commentsList = (ListView) findViewById(R.id.commentList);
+                commentAdapter = new ListAdapter(this);
+                commentsList.setAdapter(commentAdapter);        //call creation of listview
+
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    class ListAdapter extends BaseAdapter {
+        Context context;
+        ArrayList<String> bodyArray = new ArrayList<String>();
+
+        ImageButton upvote = (ImageButton) findViewById(R.id.upvote);
+        ImageButton downVote = (ImageButton) findViewById(R.id.upvote);
+
+
+        ListAdapter(Context c) {
+            context = c;
+
+        }
+
+        @Override
+        public int getCount() {
+            return ArrayComments.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return ArrayComments.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View row = inflater.inflate(R.layout.complete_confession_layout, parent, false);
+            final TextView body = (TextView) row.findViewById(R.id.body);
+            final TextView time = (TextView) row.findViewById(R.id.minSincePost);
+            final TextView comments = (TextView) row.findViewById(R.id.CommentButton);
+            final TextView voteScore = (TextView) row.findViewById(R.id.voteScore);
+            ImageButton report = (ImageButton) row.findViewById(R.id.reportPost);
+            final ImageButton Upvoting = (ImageButton) findViewById(R.id.upvote);
+            ImageButton DownVoting = (ImageButton) findViewById(R.id.downvote);
+
+
+            ((TextView)row.findViewById(R.id.CommentButton)).setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent = new Intent(getApplicationContext(), CommentsActivity.class);
+                    intent.putExtra("body", temp.body);
+                    intent.putExtra("voteScore", voteScore.getText());
+                    intent.putExtra("time", temp.p_created);
+                    intent.putExtra("postID", temp.p_id);
+                    startActivity(intent);
+                }
+            });
+
+
+
+            return row;
+        }
+
     }
 
 
