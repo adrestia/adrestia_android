@@ -293,9 +293,11 @@ public class CommentsActivity extends AppCompatActivity {
                     ArrayComments.add(commentOBJS);
                 }
 
+                /*
                 commentsList = (ListView) findViewById(R.id.commentList);
                 commentAdapter = new ListAdapter(this);
                 commentsList.setAdapter(commentAdapter);        //call creation of listview
+                */
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -303,6 +305,7 @@ public class CommentsActivity extends AppCompatActivity {
         }
     }
 
+    /*
     class ListAdapter extends BaseAdapter {
         Context context;
         ArrayList<String> bodyArray = new ArrayList<String>();
@@ -364,6 +367,8 @@ public class CommentsActivity extends AppCompatActivity {
         }
 
     }
+
+    */
 
 
 }
