@@ -152,7 +152,7 @@ public class Confessions_List_display extends AppCompatActivity implements View.
                             Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
                         }
                     });
-            Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
             queue.add(stringRequest);
 
         }
@@ -353,7 +353,8 @@ public class Confessions_List_display extends AppCompatActivity implements View.
                 {
                    SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
                     String savedAPIKEY = pref.getString("api_KEY", null);
-                    if (savedAPIKEY != null) {
+                    if (savedAPIKEY != null)
+                    {
                         //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
                         RequestQueue queue = Volley.newRequestQueue(context);
                         String url = "https://dev.collegeconfessions.party/api/posts/upvote?apikey=" + savedAPIKEY;
@@ -361,8 +362,9 @@ public class Confessions_List_display extends AppCompatActivity implements View.
                         // Request a string response from the provided URL.
                         final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                             @Override
-                            public void onResponse(String response) {
-                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                            public void onResponse(String response)
+                            {
+                                //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                                 JSONObject responseOBJ = null;
                                 try
                                 {
@@ -415,17 +417,19 @@ public class Confessions_List_display extends AppCompatActivity implements View.
                 {
                     SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
                     String savedAPIKEY = pref.getString("api_KEY", null);
-                    if (savedAPIKEY != null) {
+                    if (savedAPIKEY != null)
+                    {
                         //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
                         RequestQueue queue = Volley.newRequestQueue(context);
                         String url = "https://dev.collegeconfessions.party/api/posts/downvote?apikey=" + savedAPIKEY;
 
                         // Request a string response from the provided URL.
-                        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
+                        {
                             @Override
                             public void onResponse(String response)
                             {
-                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                                 JSONObject responseOBJ = null;
                                 try
                                 {

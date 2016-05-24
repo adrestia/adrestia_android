@@ -41,7 +41,8 @@ public class CommentsActivity extends AppCompatActivity {
     int bundlePostID;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
@@ -66,7 +67,8 @@ public class CommentsActivity extends AppCompatActivity {
         GetJSONcomments();
     }
 
-    public void GetJSONcomments() {
+    public void GetJSONcomments()
+    {
         commentOBJ = null;
         SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
         String savedAPIKEY = pref.getString("api_KEY", null);
@@ -98,7 +100,8 @@ public class CommentsActivity extends AppCompatActivity {
         }
     }
 
-    public void PostComment(View view) {
+    public void PostComment(View view)
+    {
         SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
         String savedAPIKEY = pref.getString("api_KEY", null);
 
@@ -106,7 +109,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         String commentBody = commentText.getText().toString();
 
-        Toast.makeText(getApplicationContext(), commentBody, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), commentBody, Toast.LENGTH_LONG).show();
 
         if (savedAPIKEY != null) {
             RequestQueue queue = Volley.newRequestQueue(this);
@@ -115,9 +118,11 @@ public class CommentsActivity extends AppCompatActivity {
             // Request a string response from the provided URL.
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
-                public void onResponse(String response) {
-                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                public void onResponse(String response)
+                {
+                    //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                     commentText.setText("");
+                    GetJSONcomments();      //reloads comments with latest comment
                 }
             },
                     new Response.ErrorListener() {
@@ -144,7 +149,8 @@ public class CommentsActivity extends AppCompatActivity {
         }
     }
 
-    public void CommentPostUpvoting(View view) {
+    public void CommentPostUpvoting(View view)
+    {
         SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
         String savedAPIKEY = pref.getString("api_KEY", null);
         if (savedAPIKEY != null) {
