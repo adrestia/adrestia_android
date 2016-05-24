@@ -1,19 +1,15 @@
 package com.example.calvinkwan.college_confession;
 
-import android.app.VoiceInteractor;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +27,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CommentsActivity extends AppCompatActivity {
@@ -52,7 +47,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         TextView PostBody = (TextView) findViewById(R.id.body);
         TextView time = (TextView) findViewById(R.id.minSincePost);
-        voteScore = (TextView) findViewById(R.id.voteScore);
+        voteScore = (TextView) findViewById(R.id.CommentVoteScore);
 
 
         Bundle bundle = getIntent().getExtras();
@@ -158,30 +153,38 @@ public class CommentsActivity extends AppCompatActivity {
             String url = "https://dev.collegeconfessions.party/api/posts/upvote?apikey=" + savedAPIKEY;
 
             // Request a string response from the provided URL.
-            final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
+            {
                 @Override
-                public void onResponse(String response) {
+                public void onResponse(String response)
+                {
                     //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                     JSONObject responseOBJ = null;
-                    try {
+                    try
+                    {
                         responseOBJ = new JSONObject(response);
                         String score = responseOBJ.getString("score");
                         voteScore.setText(score);
-                    } catch (JSONException e) {
+                    }
+                    catch (JSONException e)
+                    {
                         e.printStackTrace();
                     }
                 }
             },
-                    new Response.ErrorListener() {
+                    new Response.ErrorListener()
+                    {
                         @Override
-                        public void onErrorResponse(VolleyError error) {
+                        public void onErrorResponse(VolleyError error)
+                        {
                             //serverResponse.setText("Please make sure your credentials are valid");
                         }
                     }) {
                 ;
 
                 @Override
-                public Map<String, String> getParams() {
+                public Map<String, String> getParams()
+                {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("post_id", bundlePostID + "");
                     return params;
@@ -193,39 +196,49 @@ public class CommentsActivity extends AppCompatActivity {
         }
     }
 
-    public void CommentPostDownvoting(View view) {
+    public void CommentPostDownvoting(View view)
+    {
         SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
         String savedAPIKEY = pref.getString("api_KEY", null);
-        if (savedAPIKEY != null) {
+        if (savedAPIKEY != null)
+        {
             //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
             String url = "https://dev.collegeconfessions.party/api/posts/downvote?apikey=" + savedAPIKEY;
 
             // Request a string response from the provided URL.
-            final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
+            {
                 @Override
-                public void onResponse(String response) {
+                public void onResponse(String response)
+                {
                     Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                     JSONObject responseOBJ = null;
-                    try {
+                    try
+                    {
                         responseOBJ = new JSONObject(response);
                         String score = responseOBJ.getString("score");
                         voteScore.setText(score);
-                    } catch (JSONException e) {
+                    }
+                    catch (JSONException e)
+                    {
                         e.printStackTrace();
                     }
                 }
             },
-                    new Response.ErrorListener() {
+                    new Response.ErrorListener()
+                    {
                         @Override
-                        public void onErrorResponse(VolleyError error) {
+                        public void onErrorResponse(VolleyError error)
+                        {
                             //serverResponse.setText("Please make sure your credentials are valid");
                         }
                     }) {
                 ;
 
                 @Override
-                public Map<String, String> getParams() {
+                public Map<String, String> getParams()
+                {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("post_id", bundlePostID + "");
                     return params;
@@ -248,9 +261,12 @@ public class CommentsActivity extends AppCompatActivity {
         ArrayList<String> dateVoted = new ArrayList<String>();          //date of upvote and downvote
     }
 
-    void ParseJson(String JSONOBJECT) {
-        if (JSONOBJECT != null) {
-            try {
+    void ParseJson(String JSONOBJECT)
+    {
+        if (JSONOBJECT != null)
+        {
+            try
+            {
                 commentOBJ = new JSONObject(JSONOBJECT);
 
                 JSONArray commentsARR = commentOBJ.getJSONArray("comments");
@@ -258,7 +274,8 @@ public class CommentsActivity extends AppCompatActivity {
 
                 //.Toast.makeText(getApplicationContext(), commentsARR.length() + "", Toast.LENGTH_LONG).show();
 
-                for (int i = 0; i < commentsARR.length(); i++) {
+                for (int i = 0; i < commentsARR.length(); i++)
+                {
                     JSONObject obj = commentsARR.getJSONObject(i);
 
                     CommentsObjects commentOBJS = new CommentsObjects();
@@ -299,67 +316,61 @@ public class CommentsActivity extends AppCompatActivity {
                 commentsList.setAdapter(commentAdapter);        //call creation of listview
                 */
 
-            } catch (JSONException e) {
+            }
+            catch (JSONException e)
+            {
                 e.printStackTrace();
             }
         }
     }
 
-    /*
-    class ListAdapter extends BaseAdapter {
+
+    class ListAdapter extends BaseAdapter
+    {
         Context context;
-        ArrayList<String> bodyArray = new ArrayList<String>();
 
-        ImageButton upvote = (ImageButton) findViewById(R.id.upvote);
-        ImageButton downVote = (ImageButton) findViewById(R.id.upvote);
+        ImageButton upvote = (ImageButton) findViewById(R.id.CommentUpvote);
+        ImageButton downVote = (ImageButton) findViewById(R.id.CommentUpvote);
 
 
-        ListAdapter(Context c) {
+        ListAdapter(Context c)
+        {
             context = c;
 
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return ArrayComments.size();
         }
 
         @Override
-        public Object getItem(int position) {
+        public Object getItem(int position)
+        {
             return ArrayComments.get(position);
         }
 
         @Override
-        public long getItemId(int position) {
+        public long getItemId(int position)
+        {
             return position;
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View row = inflater.inflate(R.layout.complete_confession_layout, parent, false);
+            View row = inflater.inflate(R.layout.complete_comment_layout, parent, false);
             final TextView body = (TextView) row.findViewById(R.id.body);
             final TextView time = (TextView) row.findViewById(R.id.minSincePost);
             final TextView comments = (TextView) row.findViewById(R.id.CommentButton);
-            final TextView voteScore = (TextView) row.findViewById(R.id.voteScore);
-            ImageButton report = (ImageButton) row.findViewById(R.id.reportPost);
-            final ImageButton Upvoting = (ImageButton) findViewById(R.id.upvote);
-            ImageButton DownVoting = (ImageButton) findViewById(R.id.downvote);
+            final TextView voteScore = (TextView) row.findViewById(R.id.CommentVoteScore);
+            ImageButton report = (ImageButton) row.findViewById(R.id.CommentReport);
+            final ImageButton Upvoting = (ImageButton) findViewById(R.id.CommentUpvote);
+            ImageButton DownVoting = (ImageButton) findViewById(R.id.CommentDownvote);
 
 
-            ((TextView)row.findViewById(R.id.CommentButton)).setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent intent = new Intent(getApplicationContext(), CommentsActivity.class);
-                    intent.putExtra("body", temp.body);
-                    intent.putExtra("voteScore", voteScore.getText());
-                    intent.putExtra("time", temp.p_created);
-                    intent.putExtra("postID", temp.p_id);
-                    startActivity(intent);
-                }
-            });
 
 
 
@@ -368,7 +379,6 @@ public class CommentsActivity extends AppCompatActivity {
 
     }
 
-    */
 
 
 }

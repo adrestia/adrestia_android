@@ -29,14 +29,14 @@
             android:text="30 mins"
             android:id="@+id/minSincePost"
             android:layout_marginStart="43dp"
-            android:layout_alignTop="@+id/reportPost"
+            android:layout_alignTop="@+id/CommentReport"
             android:layout_alignParentStart="true" />
 
 
         <ImageButton
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:id="@+id/reportPost"
+            android:id="@+id/CommentReport"
             android:background="@mipmap/ic_error_black"
             android:scaleType="center"
             android:clickable="true"
@@ -51,11 +51,11 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:layout_alignBottom="@+id/reportPost">
+            android:layout_alignBottom="@+id/CommentReport">
             <ImageButton
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:id="@+id/upvote"
+                android:id="@+id/CommentUpvote"
                 android:onClick="CommentPostUpvoting"
                 android:background="@mipmap/ic_arrow_upward_black"
                 android:layout_marginRight="10dp"
@@ -69,15 +69,15 @@
             <ImageButton
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:id="@+id/downvote"
+                android:id="@+id/CommentDownvote"
                 android:layout_marginTop="19dp"
                 android:onClick="CommentPostDownvoting"
                 android:focusable="false"
                 android:clickable="true"
                 android:background="@mipmap/ic_arrow_downward_black"
                 android:layout_marginRight="10dp"
-                android:layout_below="@+id/voteScore"
-                android:layout_alignStart="@+id/upvote" />
+                android:layout_below="@+id/CommentVoteScore"
+                android:layout_alignStart="@+id/CommentUpvote" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -87,17 +87,27 @@
                 android:textSize="20sp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="5dp"
-                android:id="@+id/voteScore"
-                android:layout_below="@+id/upvote"
-                android:layout_alignEnd="@+id/upvote" />
+                android:id="@+id/CommentVoteScore"
+                android:layout_below="@+id/CommentUpvote"
+                android:layout_alignEnd="@+id/CommentUpvote" />
         </RelativeLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/CommentReport"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp"
+            android:text="Comments" />
+
         <ListView
-            android:paddingTop="10dp"
+            android:paddingTop="0dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/commentList"
-            android:layout_below="@+id/reportPost"
+            android:layout_below="@+id/CommentReport"
             android:layout_alignParentStart="true"
             android:layout_marginTop="73dp"
             android:layout_marginBottom="40dp"/>
