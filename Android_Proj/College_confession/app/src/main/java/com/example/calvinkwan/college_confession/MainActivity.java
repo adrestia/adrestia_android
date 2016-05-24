@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity
         mPassword = password.getText().toString();
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://dev.collegeconfessions.party/api/login";
+        String url = "https://collegeconfessions.party/api/login";
 
         // Request a string response from the provided URL.
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()

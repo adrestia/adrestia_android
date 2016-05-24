@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,8 +60,9 @@ public class CommentsActivity extends AppCompatActivity {
 
         //Toast.makeText(getApplicationContext(), bundlePostID + "", Toast.LENGTH_LONG).show();
 
+        PostBody.setMovementMethod(new ScrollingMovementMethod());
         PostBody.setText(bundlePostbody);
-        time.setText(bundlePosttime);
+        time.setText("");
         voteScore.setText(bundlePostvoteScore);
 
 
@@ -75,7 +77,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         if (savedAPIKEY != null) {
             RequestQueue queue = Volley.newRequestQueue(this);
-            String url = "https://dev.collegeconfessions.party/api/posts/" + bundlePostID + "?apikey=" + savedAPIKEY;
+            String url = "https://collegeconfessions.party/api/posts/" + bundlePostID + "?apikey=" + savedAPIKEY;
             //String url = "https://dev.collegeconfessions.party/api/posts/16?apikey=6c4da0cf269442fdb37b81e09692997e";
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -113,7 +115,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         if (savedAPIKEY != null) {
             RequestQueue queue = Volley.newRequestQueue(this);
-            String url = "https://dev.collegeconfessions.party/api/comments?apikey=" + savedAPIKEY;
+            String url = "https://collegeconfessions.party/api/comments?apikey=" + savedAPIKEY;
 
             // Request a string response from the provided URL.
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -156,7 +158,7 @@ public class CommentsActivity extends AppCompatActivity {
         if (savedAPIKEY != null) {
             //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-            String url = "https://dev.collegeconfessions.party/api/posts/upvote?apikey=" + savedAPIKEY;
+            String url = "https://collegeconfessions.party/api/posts/upvote?apikey=" + savedAPIKEY;
 
             // Request a string response from the provided URL.
             final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
@@ -171,6 +173,7 @@ public class CommentsActivity extends AppCompatActivity {
                         responseOBJ = new JSONObject(response);
                         String score = responseOBJ.getString("score");
                         voteScore.setText(score);
+
                     }
                     catch (JSONException e)
                     {
@@ -210,7 +213,7 @@ public class CommentsActivity extends AppCompatActivity {
         {
             //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-            String url = "https://dev.collegeconfessions.party/api/posts/downvote?apikey=" + savedAPIKEY;
+            String url = "https://collegeconfessions.party/api/posts/downvote?apikey=" + savedAPIKEY;
 
             // Request a string response from the provided URL.
             final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
@@ -330,6 +333,7 @@ public class CommentsActivity extends AppCompatActivity {
     }
 
 
+
     class ListAdapter extends BaseAdapter
     {
         Context context;
@@ -390,7 +394,7 @@ public class CommentsActivity extends AppCompatActivity {
                     {
                         //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
                         RequestQueue queue = Volley.newRequestQueue(context);
-                        String url = "https://dev.collegeconfessions.party/api/comments/upvote?apikey=" + savedAPIKEY;
+                        String url = "https://collegeconfessions.party/api/comments/upvote?apikey=" + savedAPIKEY;
 
                         // Request a string response from the provided URL.
                         final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
@@ -398,7 +402,7 @@ public class CommentsActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(String response)
                             {
-                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                                 JSONObject responseOBJ = null;
                                 try
                                 {
@@ -448,7 +452,7 @@ public class CommentsActivity extends AppCompatActivity {
                     {
                         //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
                         RequestQueue queue = Volley.newRequestQueue(context);
-                        String url = "https://dev.collegeconfessions.party/api/comments/downvote?apikey=" + savedAPIKEY;
+                        String url = "https://collegeconfessions.party/api/comments/downvote?apikey=" + savedAPIKEY;
 
                         // Request a string response from the provided URL.
                         final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
@@ -456,7 +460,7 @@ public class CommentsActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(String response)
                             {
-                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                                 JSONObject responseOBJ = null;
                                 try
                                 {

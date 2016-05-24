@@ -76,7 +76,7 @@ public class PostConfession extends AppCompatActivity
         {
 
             RequestQueue queue = Volley.newRequestQueue(this);
-            String url = "https://dev.collegeconfessions.party/api/posts?apikey=" + savedAPIKEY;
+            String url = "https://collegeconfessions.party/api/posts?apikey=" + savedAPIKEY;
 
             // Request a string response from the provided URL.
             final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()

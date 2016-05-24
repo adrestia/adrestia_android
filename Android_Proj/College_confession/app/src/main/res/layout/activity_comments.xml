@@ -6,18 +6,19 @@
     android:paddingTop="10dp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_marginRight="60dp"
+        android:layout_marginRight="35dp"
+        android:textSize="20sp"
         android:text="&quot;I just did something bad&quot; hello world is amazings balls guys i am so sleepy"
         android:id="@+id/body"
-        android:textSize="20sp"
         android:textColor="@color/black"
-        android:ellipsize="end"
-        android:maxLines="2"
+        android:maxLines="1000"
+        android:scrollbars="vertical"
         android:layout_marginLeft="10dp"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,11 +36,10 @@
             android:layout_alignParentStart="true" />
 
 
-        <ImageButton
+        <TextView
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:id="@+id/CommentReport"
-            android:background="@mipmap/ic_error_black"
             android:scaleType="center"
             android:clickable="true"
             android:focusable="false"
@@ -52,8 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignBottom="@+id/CommentReport">
+            android:layout_alignEnd="@+id/PostBTTN"
+            android:layout_marginTop="24dp">
             <ImageButton
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -92,27 +92,30 @@
                 android:id="@+id/CommentVoteScore"
                 android:layout_below="@+id/CommentUpvote"
                 android:layout_alignEnd="@+id/CommentUpvote" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comments"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:id="@+id/textView"
+                android:layout_below="@+id/CommentDownvote"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="46dp" />
         </RelativeLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:gravity="center_horizontal"
-            android:layout_below="@+id/CommentReport"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="15dp"
-            android:text="Comments"
-            android:id="@+id/textView" />
+
 
         <ListView
-            android:paddingTop="0dp"
+            android:paddingTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/commentList"
+            android:layout_below="@+id/CommentReport"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="40dp"
-            android:layout_below="@+id/textView" />
+            android:layout_marginTop="73dp"
+            android:layout_marginBottom="40dp"/>
 
         <EditText
             android:layout_width="match_parent"

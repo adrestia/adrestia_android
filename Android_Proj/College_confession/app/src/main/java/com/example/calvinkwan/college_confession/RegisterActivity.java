@@ -139,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity
             if (matchingPasswords(password1, password2))
             {
                 RequestQueue queue = Volley.newRequestQueue(this);
-                String url = "https://dev.collegeconfessions.party/api/register";
+                String url = "https://collegeconfessions.party/api/register";
 
                 // Request a string response from the provided URL.
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()

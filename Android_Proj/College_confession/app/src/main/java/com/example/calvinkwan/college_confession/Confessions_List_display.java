@@ -130,7 +130,7 @@ public class Confessions_List_display extends AppCompatActivity implements View.
             String url;
 
             RequestQueue queue = Volley.newRequestQueue(this);
-            url = "https://dev.collegeconfessions.party/api/" + type +"?apikey=" + savedAPIKEY;
+            url = "https://collegeconfessions.party/api/" + type +"?apikey=" + savedAPIKEY;
 
             // Request a string response from the provided URL.
             final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>()
@@ -358,7 +358,7 @@ public class Confessions_List_display extends AppCompatActivity implements View.
                     {
                         //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
                         RequestQueue queue = Volley.newRequestQueue(context);
-                        String url = "https://dev.collegeconfessions.party/api/posts/upvote?apikey=" + savedAPIKEY;
+                        String url = "https://collegeconfessions.party/api/posts/upvote?apikey=" + savedAPIKEY;
 
                         // Request a string response from the provided URL.
                         final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -422,7 +422,7 @@ public class Confessions_List_display extends AppCompatActivity implements View.
                     {
                         //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
                         RequestQueue queue = Volley.newRequestQueue(context);
-                        String url = "https://dev.collegeconfessions.party/api/posts/downvote?apikey=" + savedAPIKEY;
+                        String url = "https://collegeconfessions.party/api/posts/downvote?apikey=" + savedAPIKEY;
 
                         // Request a string response from the provided URL.
                         final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
