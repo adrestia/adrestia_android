@@ -20,27 +20,22 @@
 
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/email"
-        android:hint="Email must be a valid university email"
-        android:gravity="center"
         android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignStart="@+id/password" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:gravity="center"
         android:ems="10"
-        android:hint="Minimum 8 characters"
         android:id="@+id/password"
         android:layout_below="@+id/textView3"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -49,8 +44,7 @@
         android:ems="10"
         android:id="@+id/confirmPassword"
         android:layout_below="@+id/textView4"
-        android:layout_alignStart="@+id/password"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignStart="@+id/password" />
 
     <TextView
         android:layout_width="wrap_content"

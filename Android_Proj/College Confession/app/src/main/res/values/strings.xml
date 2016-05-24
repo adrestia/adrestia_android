@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">College Confession</string>
+    <string name="app_name">College_confession</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
