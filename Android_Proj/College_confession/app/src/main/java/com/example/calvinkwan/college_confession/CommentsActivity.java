@@ -4,6 +4,7 @@ import android.app.VoiceInteractor;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -164,7 +165,7 @@ public class CommentsActivity extends AppCompatActivity
                 @Override
                 public void onResponse(String response)
                 {
-                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                     JSONObject responseOBJ = null;
                     try
                     {
@@ -274,40 +275,36 @@ public class CommentsActivity extends AppCompatActivity
 
                 JSONArray commentsARR = commentOBJ.getJSONArray("comments");
 
+
                 //.Toast.makeText(getApplicationContext(), commentsARR.length() + "", Toast.LENGTH_LONG).show();
 
-                for(int i = 0; i < commentsARR.length(); i++)
-                {
+                for(int i = 0; i < commentsARR.length(); i++) {
                     JSONObject obj = commentsARR.getJSONObject(i);
 
                     CommentsObjects commentOBJS = new CommentsObjects();
 
                     //Toast.makeText(getApplicationContext(), commentsARR.length() + "", Toast.LENGTH_LONG).show();
-                    if(obj.has("c_body"))
-                    {
+                    if (obj.has("c_body")) {
                         commentOBJS.commentBody = obj.getString("c_body");
                         Toast.makeText(getApplicationContext(), commentOBJS.commentBody, Toast.LENGTH_LONG).show();
                     }
-                    if(obj.has("c_downvotes"))
-                    {
+
+                    if (obj.has("c_downvotes")) {
                         //Toast.makeText(getApplicationContext(), "downvotres", Toast.LENGTH_LONG).show();
                         commentOBJS.commentD_votes = obj.getInt("c_downvotes");
                     }
-                    if(obj.has("c_id"))
-                    {
+                    if (obj.has("c_id")) {
                         //Toast.makeText(getApplicationContext(), "comment id", Toast.LENGTH_LONG).show();
                         commentOBJS.commentID = obj.getInt("c_id");
                     }
-                    if(obj.has("c_upvotes"))
-                    {
+                    /*if (obj.has("c_upvotes")) {
                         //Toast.makeText(getApplicationContext(), "upvotes", Toast.LENGTH_LONG).show();
                         commentOBJS.commentUp_votes = obj.getInt("c_upvotes");
                     }
-                    if(obj.has("l_is_like"))
-                    {
+                    if (obj.has("l_is_like")) {
                         //Toast.makeText(getApplicationContext(), "is liked", Toast.LENGTH_LONG).show();
                         commentOBJS.Is_Like = obj.getBoolean("l_is_like");
-                    }
+                    }*/
 
                     Toast.makeText(getApplicationContext(), "did it make it to the end", Toast.LENGTH_LONG).show();
                     ArrayComments.add(commentOBJS);
