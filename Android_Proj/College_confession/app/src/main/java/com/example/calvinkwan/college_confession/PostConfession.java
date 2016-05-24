@@ -84,7 +84,7 @@ public class PostConfession extends AppCompatActivity
                 @Override
                 public void onResponse(String response)
                 {
-                    sResponse.setText(response);
+                    //sResponse.setText(response);
                     try
                     {
                         JSONObject responseOBJ = new JSONObject(response);

@@ -77,14 +77,13 @@ public class MainActivity extends AppCompatActivity
             {
                 loginUser.dismiss();
 
-                serverResponse.setText(response);
+                //serverResponse.setText(response);
                 try
                 {
                     JSONObject responseOBJ = new JSONObject(response);
 
                     String status = responseOBJ.getString("status");
                     String apiKey = responseOBJ.getString("api_key");
-                    Toast.makeText(getApplicationContext(), status, Toast.LENGTH_LONG).show();
 
                     SharedPreferences.Editor editor = getSharedPreferences("API_key", MODE_PRIVATE).edit();
                     editor.putString("api_KEY", apiKey);

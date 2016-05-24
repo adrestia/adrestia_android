@@ -1,6 +1,7 @@
 package com.example.calvinkwan.college_confession;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Pair;
@@ -37,9 +38,6 @@ public class RegisterActivity extends AppCompatActivity
     EditText mEmail, mPassword, mConfirmPassword;
     String password1, password2, email, College_selcted;
     TextView responseText;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -150,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity
 
                         registration.dismiss();
 
-                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                         try {
                             JSONObject responseOBJ = new JSONObject(response);
 
@@ -159,7 +157,10 @@ public class RegisterActivity extends AppCompatActivity
 
                             responseText.setText(message);
 
-                            Toast.makeText(getApplicationContext(), status, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
 
 
                         }

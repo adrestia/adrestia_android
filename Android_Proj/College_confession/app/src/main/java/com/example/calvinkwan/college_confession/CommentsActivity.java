@@ -221,7 +221,7 @@ public class CommentsActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(String response)
                 {
-                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                     JSONObject responseOBJ = null;
                     try
                     {
