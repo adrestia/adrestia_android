@@ -283,7 +283,7 @@ public class CommentsActivity extends AppCompatActivity {
                     //Toast.makeText(getApplicationContext(), commentsARR.length() + "", Toast.LENGTH_LONG).show();
                     if (obj.has("c_body")) {
                         commentOBJS.commentBody = obj.getString("c_body");
-                        Toast.makeText(getApplicationContext(), commentOBJS.commentBody, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), commentOBJS.commentBody, Toast.LENGTH_LONG).show();
                     }
 
                     if (obj.has("c_downvotes")) {
@@ -310,11 +310,10 @@ public class CommentsActivity extends AppCompatActivity {
                     ArrayComments.add(commentOBJS);
                 }
 
-                /*
+
                 commentsList = (ListView) findViewById(R.id.commentList);
                 commentAdapter = new ListAdapter(this);
                 commentsList.setAdapter(commentAdapter);        //call creation of listview
-                */
 
             }
             catch (JSONException e)
@@ -362,13 +361,17 @@ public class CommentsActivity extends AppCompatActivity {
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = inflater.inflate(R.layout.complete_comment_layout, parent, false);
-            final TextView body = (TextView) row.findViewById(R.id.body);
-            final TextView time = (TextView) row.findViewById(R.id.minSincePost);
-            final TextView comments = (TextView) row.findViewById(R.id.CommentButton);
-            final TextView voteScore = (TextView) row.findViewById(R.id.CommentVoteScore);
-            ImageButton report = (ImageButton) row.findViewById(R.id.CommentReport);
-            final ImageButton Upvoting = (ImageButton) findViewById(R.id.CommentUpvote);
+            TextView body = (TextView) row.findViewById(R.id.commentBody);
+            TextView time = (TextView) row.findViewById(R.id.commentText);
+            TextView voteScore = (TextView) row.findViewById(R.id.CommentVoteScore);
+            //ImageButton report = (ImageButton) row.findViewById(R.id.CommentReport);
+            ImageButton Upvoting = (ImageButton) findViewById(R.id.CommentUpvote);
             ImageButton DownVoting = (ImageButton) findViewById(R.id.CommentDownvote);
+
+            final CommentsObjects temp = ArrayComments.get(position);
+
+            body.setText(temp.commentBody);
+            voteScore.setText(temp.commentUp_votes - temp.commentD_votes + "");
 
 
 

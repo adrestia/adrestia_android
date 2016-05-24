@@ -5,5 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="mainBackground">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="grayish">#404040</color>
 
 </resources>

@@ -38,7 +38,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.calvinkwan.college_confession.Confessions_List_display" />
         </activity>
-        <activity android:name=".CommentsActivity"></activity>
+        <activity android:name=".CommentsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.calvinkwan.college_confession.Confessions_List_display" />
+        </activity>
     </application>
 
 </manifest>

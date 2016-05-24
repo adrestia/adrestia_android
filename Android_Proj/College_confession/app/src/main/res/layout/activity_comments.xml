@@ -12,6 +12,8 @@
         android:layout_marginRight="60dp"
         android:text="&quot;I just did something bad&quot; hello world is amazings balls guys i am so sleepy"
         android:id="@+id/body"
+        android:textSize="20sp"
+        android:textColor="@color/black"
         android:ellipsize="end"
         android:maxLines="2"
         android:layout_marginLeft="10dp"
@@ -100,17 +102,17 @@
             android:layout_below="@+id/CommentReport"
             android:layout_alignParentStart="true"
             android:layout_marginTop="15dp"
-            android:text="Comments" />
+            android:text="Comments"
+            android:id="@+id/textView" />
 
         <ListView
             android:paddingTop="0dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/commentList"
-            android:layout_below="@+id/CommentReport"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="73dp"
-            android:layout_marginBottom="40dp"/>
+            android:layout_marginBottom="40dp"
+            android:layout_below="@+id/textView" />
 
         <EditText
             android:layout_width="match_parent"
