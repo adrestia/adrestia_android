@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingTop="10dp"
     android:paddingBottom="20dp">
 
@@ -21,7 +21,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,12 +30,13 @@
             android:text="30 mins"
             android:id="@+id/minSincePost"
             android:layout_marginStart="43dp"
-            android:layout_alignTop="@+id/CommentButton"
+            android:layout_alignTop="@+id/CommentReport"
             android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Comments"
             android:id="@+id/CommentButton"
@@ -53,54 +54,56 @@
             android:layout_marginTop="78dp"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/CommentButton" />
-            <!--android:background="@mipmap/ic_error_black"
-            -->
 
-
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageButton
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:id="@+id/CommentUpvote"
-            android:onClick="Upvoting"
-            android:background="@mipmap/ic_arrow_upward_black"
-            android:layout_marginRight="10dp"
-            android:clickable="true"
-            android:focusable="false"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="14dp" />
+            android:layout_alignParentStart="true">
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/CommentUpvote"
+                android:onClick="Upvoting"
+                android:background="@mipmap/ic_arrow_upward_black"
+                android:layout_marginRight="10dp"
+                android:clickable="true"
+                android:focusable="false"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="14dp" />
 
 
-        <ImageButton
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:id="@+id/CommentDownvote"
-            android:layout_marginTop="19dp"
-            android:focusable="false"
-            android:clickable="true"
-            android:background="@mipmap/ic_arrow_downward_black"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/CommentVoteScore"
-            android:layout_alignStart="@+id/CommentUpvote" />
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/CommentDownvote"
+                android:layout_marginTop="19dp"
+                android:focusable="false"
+                android:clickable="true"
+                android:background="@mipmap/ic_arrow_downward_black"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/CommentVoteScore"
+                android:layout_alignStart="@+id/CommentUpvote" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="20"
-            android:textSize="20sp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="5dp"
-            android:id="@+id/CommentVoteScore"
-            android:layout_below="@+id/CommentUpvote"
-            android:layout_alignEnd="@+id/CommentUpvote" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="20"
+                android:textSize="20sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/CommentVoteScore"
+                android:layout_below="@+id/CommentUpvote"
+                android:layout_alignEnd="@+id/CommentUpvote" />
+        </RelativeLayout>
+        <!--android:background="@mipmap/ic_error_black"
+        -->
+
+
+
+
     </RelativeLayout>
 
 </RelativeLayout>

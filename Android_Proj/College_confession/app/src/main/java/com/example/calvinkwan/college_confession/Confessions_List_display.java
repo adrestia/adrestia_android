@@ -332,6 +332,7 @@ public class Confessions_List_display extends AppCompatActivity implements View.
 
             */
 
+
             ((TextView)row.findViewById(R.id.CommentButton)).setOnClickListener(new View.OnClickListener()
             {
                 @Override

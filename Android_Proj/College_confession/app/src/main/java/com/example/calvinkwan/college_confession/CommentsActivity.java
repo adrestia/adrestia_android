@@ -369,7 +369,7 @@ public class CommentsActivity extends AppCompatActivity {
             View row = inflater.inflate(R.layout.complete_comment_layout, parent, false);
             TextView body = (TextView) row.findViewById(R.id.commentBody);
             TextView time = (TextView) row.findViewById(R.id.commentText);
-            TextView voteScore = (TextView) row.findViewById(R.id.CommentVoteScore);
+            final TextView voteScore = (TextView) row.findViewById(R.id.CommentVoteScore);
             //ImageButton report = (ImageButton) row.findViewById(R.id.CommentReport);
             ImageButton Upvoting = (ImageButton) findViewById(R.id.CommentUpvote);
             ImageButton DownVoting = (ImageButton) findViewById(R.id.CommentDownvote);
@@ -379,6 +379,121 @@ public class CommentsActivity extends AppCompatActivity {
             body.setText(temp.commentBody);
             voteScore.setText(temp.commentUp_votes - temp.commentD_votes + "");
 
+            ((ImageButton)row.findViewById(R.id.CommentUpvote)).setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
+                    String savedAPIKEY = pref.getString("api_KEY", null);
+                    if (savedAPIKEY != null)
+                    {
+                        //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
+                        RequestQueue queue = Volley.newRequestQueue(context);
+                        String url = "https://dev.collegeconfessions.party/api/comments/upvote?apikey=" + savedAPIKEY;
+
+                        // Request a string response from the provided URL.
+                        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response)
+                            {
+                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                                JSONObject responseOBJ = null;
+                                try
+                                {
+                                    responseOBJ = new JSONObject(response);
+                                    String score = responseOBJ.getString("score");
+                                    voteScore.setText(score);
+                                }
+                                catch (JSONException e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                                new Response.ErrorListener()
+                                {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error)
+                                    {
+                                        //serverResponse.setText("Please make sure your credentials are valid");
+                                    }
+                                })
+                        {;
+                            @Override
+                            public Map<String, String> getParams()
+                            {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("comment_id", temp.commentID + "");
+                                return params;
+                            }
+                            //https://gist.github.com/mombrea/7250835
+                        };
+
+                        // Add the request to the RequestQueue.
+                        queue.add(stringRequest);
+                    }
+                }
+            });
+
+            ((ImageButton)row.findViewById(R.id.CommentDownvote)).setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    SharedPreferences pref = getSharedPreferences("API_key", MODE_PRIVATE);
+                    String savedAPIKEY = pref.getString("api_KEY", null);
+                    if (savedAPIKEY != null)
+                    {
+                        //Toast.makeText(getApplicationContext(), temp.body, Toast.LENGTH_LONG).show();
+                        RequestQueue queue = Volley.newRequestQueue(context);
+                        String url = "https://dev.collegeconfessions.party/api/comments/downvote?apikey=" + savedAPIKEY;
+
+                        // Request a string response from the provided URL.
+                        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response)
+                            {
+                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                                JSONObject responseOBJ = null;
+                                try
+                                {
+                                    responseOBJ = new JSONObject(response);
+                                    String score = responseOBJ.getString("score");
+                                    voteScore.setText(score);
+                                }
+                                catch (JSONException e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                                new Response.ErrorListener()
+                                {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error)
+                                    {
+                                        //serverResponse.setText("Please make sure your credentials are valid");
+                                    }
+                                })
+                        {;
+                            @Override
+                            public Map<String, String> getParams()
+                            {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("comment_id", temp.commentID + "");
+                                return params;
+                            }
+                            //https://gist.github.com/mombrea/7250835
+                        };
+
+                        // Add the request to the RequestQueue.
+                        queue.add(stringRequest);
+                    }
+                }
+            });
 
 
 
